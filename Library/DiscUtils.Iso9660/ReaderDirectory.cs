@@ -120,6 +120,29 @@ namespace DiscUtils.Iso9660
             return null;
         }
 
+        public IEnumerable<ReaderDirEntry> GetEntriesByName(string name)
+        {
+            bool anyVerMatch = name.IndexOf(';') < 0;
+            string normName = IsoUtilities.NormalizeFileName(name).ToUpper(CultureInfo.InvariantCulture);
+            if (anyVerMatch)
+            {
+                normName = normName.Substring(0, normName.LastIndexOf(';') + 1);
+            }
+
+            foreach (ReaderDirEntry r in _records)
+            {
+                string toComp = IsoUtilities.NormalizeFileName(r.FileName).ToUpper(CultureInfo.InvariantCulture);
+                if (!anyVerMatch && toComp == normName)
+                {
+                    yield return r;
+                }
+                else if (anyVerMatch && toComp.StartsWith(normName, StringComparison.Ordinal))
+                {
+                    yield return r;
+                }
+            }
+        }
+
         public ReaderDirEntry CreateNewFile(string name)
         {
             throw new NotSupportedException();

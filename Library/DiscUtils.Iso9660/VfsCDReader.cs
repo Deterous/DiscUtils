@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using DiscUtils.Streams;
 using DiscUtils.Vfs;
 
@@ -311,21 +312,37 @@ namespace DiscUtils.Iso9660
         public Range<long, long>[] PathToClusters(string path)
         {
             ReaderDirEntry entry = GetDirectoryEntry(path);
+
             if (entry == null)
             {
                 throw new FileNotFoundException("File not found", path);
             }
-
-            if (entry.Record.FileUnitSize != 0 || entry.Record.InterleaveGapSize != 0)
+            
+            if (entry.IsDirectory)
             {
-                throw new NotSupportedException("Non-contiguous extents not supported");
+                if (entry.Record.FileUnitSize != 0 || entry.Record.InterleaveGapSize != 0)
+                {
+                    throw new NotSupportedException("Non-contiguous extents not supported");
+                }
+
+                return new[]
+                {
+                    new Range<long, long>(entry.Record.LocationOfExtent,
+                        MathUtilities.Ceil(entry.Record.DataLength, IsoUtilities.SectorSize))
+                };
             }
 
-            return new[]
-            {
-                new Range<long, long>(entry.Record.LocationOfExtent,
-                    MathUtilities.Ceil(entry.Record.DataLength, IsoUtilities.SectorSize))
-            };
+            int index = path.LastIndexOf('\\'); // Path.DirectorySeparatorChar ?
+            string dir = path.Substring(0, index + 1);
+            string filename = path.Substring(index + 1);
+
+            // Get all entries for file
+            ReaderDirectory rdr = new ReaderDirectory(Context, GetDirectoryEntry(dir));
+            IEnumerable<ReaderDirEntry> dirEntries = rdr.GetEntriesByName(filename);
+
+            // Return array of all clusters
+            return dirEntries.Select(d => new Range<long, long>(d.Record.LocationOfExtent, MathUtilities.Ceil(d.Record.DataLength, IsoUtilities.SectorSize))).ToArray();
+
         }
 
         public StreamExtent[] PathToExtents(string path)
