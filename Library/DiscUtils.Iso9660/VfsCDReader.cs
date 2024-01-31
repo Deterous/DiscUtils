@@ -341,7 +341,7 @@ namespace DiscUtils.Iso9660
             IEnumerable<ReaderDirEntry> dirEntries = rdr.GetEntriesByName(filename);
 
             // Return array of all clusters
-            return dirEntries.Select(d => new Range<long, long>(d.Record.LocationOfExtent, MathUtilities.Ceil(d.Record.DataLength, IsoUtilities.SectorSize))).ToArray();
+            return dirEntries.Select(d => new Range<long, long>(d.Record.LocationOfExtent, d.Record.DataLength)).ToArray();
 
         }
 
