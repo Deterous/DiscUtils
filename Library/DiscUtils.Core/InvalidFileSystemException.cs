@@ -51,15 +51,5 @@ namespace DiscUtils
         /// <param name="innerException">The inner exception.</param>
         public InvalidFileSystemException(string message, Exception innerException)
             : base(message, innerException) {}
-
-        /// <summary>
-        /// Initializes a new instance of the InvalidFileSystemException class.
-        /// </summary>
-        /// <param name="info">The serialization info.</param>
-        /// <param name="context">The streaming context.</param>
-        protected InvalidFileSystemException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
     }
 }
