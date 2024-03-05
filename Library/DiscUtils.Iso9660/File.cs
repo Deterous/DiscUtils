@@ -22,10 +22,10 @@
 
 using System;
 using System.IO;
-using DiscUtils.Vfs;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Vfs;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Iso9660
+namespace LibIRD.DiscUtils.Iso9660
 {
     internal class File : IVfsFile
     {

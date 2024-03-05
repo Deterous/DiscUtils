@@ -23,7 +23,7 @@
 using System;
 using System.IO;
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     /// <summary>
     /// Class for reading little-endian data from a stream.

@@ -1,6 +1,6 @@
 using System;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Enumeration of possible cluster roles.

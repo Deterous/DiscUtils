@@ -20,9 +20,9 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Describes a particular file that is a constituent part of a virtual disk.

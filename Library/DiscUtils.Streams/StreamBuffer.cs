@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     /// <summary>
     /// Converts a Stream into an IBuffer instance.

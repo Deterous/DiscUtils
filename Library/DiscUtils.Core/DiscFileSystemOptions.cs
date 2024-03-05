@@ -22,7 +22,7 @@
 
 using System;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Common file system options.

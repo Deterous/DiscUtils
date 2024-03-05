@@ -24,10 +24,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using DiscUtils.Streams;
-using DiscUtils.Vfs;
+using LibIRD.DiscUtils.Streams;
+using LibIRD.DiscUtils.Vfs;
 
-namespace DiscUtils.Iso9660
+namespace LibIRD.DiscUtils.Iso9660
 {
     internal class VfsCDReader : VfsReadOnlyFileSystem<ReaderDirEntry, File, ReaderDirectory, IsoContext>,
                                  IClusterBasedFileSystem, IUnixFileSystem

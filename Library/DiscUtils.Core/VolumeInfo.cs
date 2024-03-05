@@ -23,9 +23,9 @@
 #if !NETSTANDARD
 using System;
 #endif
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Base class that holds information about a disk volume.

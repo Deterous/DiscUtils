@@ -22,9 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Represents the base layer, or a differencing layer of a VirtualDisk.

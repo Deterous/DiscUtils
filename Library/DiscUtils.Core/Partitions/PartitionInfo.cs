@@ -22,9 +22,9 @@
 
 using System;
 using System.Globalization;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Partitions
+namespace LibIRD.DiscUtils.Partitions
 {
     /// <summary>
     /// Base class representing a disk partition.

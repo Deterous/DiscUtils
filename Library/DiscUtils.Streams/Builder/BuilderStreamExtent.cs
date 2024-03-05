@@ -22,7 +22,7 @@
 
 using System.IO;
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     public class BuilderStreamExtent : BuilderExtent
     {

@@ -22,9 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Partitions
+namespace LibIRD.DiscUtils.Partitions
 {
     /// <summary>
     /// Builds a stream with the contents of a BIOS partitioned disk.

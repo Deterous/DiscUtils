@@ -20,7 +20,7 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-namespace DiscUtils.Compression
+namespace LibIRD.DiscUtils.Compression
 {
     internal class MoveToFront
     {

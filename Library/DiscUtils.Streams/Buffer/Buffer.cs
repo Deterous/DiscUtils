@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System;
 #endif
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     /// <summary>
     /// Abstract base class for implementations of IBuffer.

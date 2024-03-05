@@ -22,7 +22,7 @@
 
 using System.IO;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Base class holding information about a file system.

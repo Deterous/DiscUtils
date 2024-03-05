@@ -22,10 +22,10 @@
 
 using System;
 using System.Text;
-using DiscUtils.Internal;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Internal;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Iso9660
+namespace LibIRD.DiscUtils.Iso9660
 {
     internal class CommonVolumeDescriptor : BaseVolumeDescriptor
     {

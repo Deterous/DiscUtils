@@ -20,7 +20,7 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-namespace DiscUtils.Internal
+namespace LibIRD.DiscUtils.Internal
 {
     /// <summary>
     /// Calculates CRC32 of buffers.

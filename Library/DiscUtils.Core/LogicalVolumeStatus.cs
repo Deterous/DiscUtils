@@ -1,4 +1,4 @@
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Enumeration of the health status of a logical volume.

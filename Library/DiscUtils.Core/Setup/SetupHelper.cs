@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using DiscUtils.CoreCompat;
+using LibIRD.DiscUtils.CoreCompat;
 
-namespace DiscUtils.Setup
+namespace LibIRD.DiscUtils.Setup
 {
     /// <summary>
     /// Helps setup new DiscUtils dependencies, when loaded into target programs

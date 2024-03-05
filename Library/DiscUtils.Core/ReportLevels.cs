@@ -1,6 +1,6 @@
 using System;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Flags for the amount of detail to include in a report.

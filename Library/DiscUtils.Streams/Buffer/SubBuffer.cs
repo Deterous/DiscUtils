@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     /// <summary>
     /// Class representing a portion of an existing buffer.

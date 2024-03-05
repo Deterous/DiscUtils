@@ -23,10 +23,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using DiscUtils.Internal;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Internal;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Raw
+namespace LibIRD.DiscUtils.Raw
 {
     /// <summary>
     /// Represents a raw disk image.

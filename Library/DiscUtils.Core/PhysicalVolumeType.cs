@@ -1,4 +1,4 @@
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Enumeration of possible types of physical volume.

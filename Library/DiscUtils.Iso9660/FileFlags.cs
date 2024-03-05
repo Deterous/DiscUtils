@@ -1,6 +1,6 @@
 using System;
 
-namespace DiscUtils.Iso9660
+namespace LibIRD.DiscUtils.Iso9660
 {
     [Flags]
     internal enum FileFlags : byte

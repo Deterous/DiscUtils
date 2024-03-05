@@ -20,7 +20,7 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-namespace DiscUtils.LogicalDiskManager
+namespace LibIRD.DiscUtils.LogicalDiskManager
 {
     internal sealed class DiskRecord : DatabaseRecord
     {

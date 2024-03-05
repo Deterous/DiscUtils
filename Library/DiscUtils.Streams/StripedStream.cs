@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     public class StripedStream : SparseStream
     {

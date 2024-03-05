@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 
-namespace DiscUtils.Internal
+namespace LibIRD.DiscUtils.Internal
 {
     internal abstract class LogicalVolumeFactory
     {

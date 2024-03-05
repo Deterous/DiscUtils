@@ -22,7 +22,7 @@
 
 using System.Text;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Class with generic file system parameters.

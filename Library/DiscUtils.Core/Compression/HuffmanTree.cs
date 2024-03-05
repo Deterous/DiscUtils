@@ -20,7 +20,7 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-namespace DiscUtils.Compression
+namespace LibIRD.DiscUtils.Compression
 {
     /// <summary>
     /// A canonical Huffman tree implementation.

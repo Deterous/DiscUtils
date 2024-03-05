@@ -23,7 +23,7 @@
 using System;
 using System.IO;
 
-namespace DiscUtils.Internal
+namespace LibIRD.DiscUtils.Internal
 {
     internal sealed class LocalFileLocator : FileLocator
     {

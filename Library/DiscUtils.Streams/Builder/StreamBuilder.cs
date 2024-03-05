@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     /// <summary>
     /// Base class for objects that can dynamically construct a stream.

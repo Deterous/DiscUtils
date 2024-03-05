@@ -22,7 +22,7 @@
 
 using System.Text;
 
-namespace DiscUtils.Iso9660
+namespace LibIRD.DiscUtils.Iso9660
 {
     internal sealed class GenericSuspExtension : SuspExtension
     {

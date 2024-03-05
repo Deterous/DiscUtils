@@ -20,7 +20,7 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-namespace DiscUtils.Internal
+namespace LibIRD.DiscUtils.Internal
 {
     internal enum Crc32Algorithm
     {

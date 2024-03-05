@@ -22,10 +22,10 @@
 
 using System;
 using System.Globalization;
-using DiscUtils.Partitions;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Partitions;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Information about a physical disk volume, which may be a partition or an entire disk.

@@ -21,9 +21,9 @@
 //
 
 using System;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Partitions
+namespace LibIRD.DiscUtils.Partitions
 {
     internal class BiosPartitionRecord : IComparable<BiosPartitionRecord>
     {

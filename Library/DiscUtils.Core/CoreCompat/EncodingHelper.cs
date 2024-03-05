@@ -2,7 +2,7 @@
 using System.Text;
 #endif
 
-namespace DiscUtils.CoreCompat
+namespace LibIRD.DiscUtils.CoreCompat
 {
     internal static class EncodingHelper
     {

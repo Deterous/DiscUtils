@@ -22,7 +22,7 @@
 
 using System;
 
-namespace DiscUtils.Partitions
+namespace LibIRD.DiscUtils.Partitions
 {
     /// <summary>
     /// Convenient access to well known GPT partition types.

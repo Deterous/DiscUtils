@@ -23,7 +23,7 @@
 using System;
 using System.Globalization;
 
-namespace DiscUtils.Compression
+namespace LibIRD.DiscUtils.Compression
 {
     internal abstract class DataBlockTransform
     {

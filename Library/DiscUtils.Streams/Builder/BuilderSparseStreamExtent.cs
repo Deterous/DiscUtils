@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     public class BuilderSparseStreamExtent : BuilderExtent
     {

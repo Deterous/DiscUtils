@@ -23,10 +23,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using DiscUtils.Streams;
-using Buffer=DiscUtils.Streams.Buffer;
+using LibIRD.DiscUtils.Streams;
+using Buffer=LibIRD.DiscUtils.Streams.Buffer;
 
-namespace DiscUtils.Compression
+namespace LibIRD.DiscUtils.Compression
 {
     internal class ZlibBuffer : Buffer
     {

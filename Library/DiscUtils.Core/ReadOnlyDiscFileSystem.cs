@@ -22,9 +22,9 @@
 
 using System;
 using System.IO;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Base class for file systems that are by their nature read-only, causes NotSupportedException to be thrown

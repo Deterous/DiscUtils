@@ -23,7 +23,7 @@
 using System;
 using System.IO;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Common information for Windows files.

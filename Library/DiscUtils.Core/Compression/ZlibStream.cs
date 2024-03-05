@@ -23,9 +23,9 @@
 using System;
 using System.IO;
 using System.IO.Compression;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Compression
+namespace LibIRD.DiscUtils.Compression
 {
     /// <summary>
     /// Implementation of the Zlib compression algorithm.

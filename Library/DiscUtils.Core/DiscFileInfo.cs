@@ -22,7 +22,7 @@
 
 using System.IO;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Provides information about a file on a disc.

@@ -22,7 +22,7 @@
 
 using System;
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     /// <summary>
     /// Represents a stream that is circular, so reads and writes off the end of the stream wrap.

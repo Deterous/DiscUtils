@@ -25,10 +25,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
-using DiscUtils.Internal;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Internal;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Partitions
+namespace LibIRD.DiscUtils.Partitions
 {
     /// <summary>
     /// Represents a GUID Partition Table.

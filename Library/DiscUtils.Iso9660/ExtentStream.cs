@@ -23,7 +23,7 @@
 using System;
 using System.IO;
 
-namespace DiscUtils.Iso9660
+namespace LibIRD.DiscUtils.Iso9660
 {
     internal class ExtentStream : Stream
     {

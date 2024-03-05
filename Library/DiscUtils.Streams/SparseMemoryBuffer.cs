@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     /// <summary>
     /// A sparse in-memory buffer.

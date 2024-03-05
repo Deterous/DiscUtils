@@ -22,7 +22,7 @@
 
 using System.IO;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Interface exposed by objects that can provide a structured trace of their content.

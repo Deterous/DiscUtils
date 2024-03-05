@@ -22,9 +22,9 @@
 
 using System.Collections.Generic;
 using System.IO;
-using DiscUtils.Vfs;
+using LibIRD.DiscUtils.Vfs;
 
-namespace DiscUtils.Iso9660
+namespace LibIRD.DiscUtils.Iso9660
 {
     internal class IsoContext : VfsContext
     {

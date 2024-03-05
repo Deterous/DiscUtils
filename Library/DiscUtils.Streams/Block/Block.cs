@@ -20,7 +20,7 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     public class Block
     {

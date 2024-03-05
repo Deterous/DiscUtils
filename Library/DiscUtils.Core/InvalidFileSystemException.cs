@@ -24,7 +24,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Exception thrown when some invalid file system data is found, indicating probably corruption.

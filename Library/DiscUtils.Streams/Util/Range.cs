@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     /// <summary>
     /// Represents a range of values.

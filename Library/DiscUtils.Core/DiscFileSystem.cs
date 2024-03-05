@@ -22,9 +22,9 @@
 
 using System;
 using System.IO;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Provides the base class for all file systems.

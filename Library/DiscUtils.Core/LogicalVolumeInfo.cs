@@ -21,9 +21,9 @@
 //
 
 using System;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Information about a logical disk volume, which may be backed by one or more physical volumes.

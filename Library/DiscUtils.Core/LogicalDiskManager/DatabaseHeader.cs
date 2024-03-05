@@ -21,9 +21,9 @@
 //
 
 using System;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.LogicalDiskManager
+namespace LibIRD.DiscUtils.LogicalDiskManager
 {
     internal class DatabaseHeader
     {

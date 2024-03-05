@@ -23,9 +23,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Iso9660
+namespace LibIRD.DiscUtils.Iso9660
 {
     internal class DirectoryExtent : BuilderExtent
     {

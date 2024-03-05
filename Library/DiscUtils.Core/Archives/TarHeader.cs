@@ -21,9 +21,9 @@
 //
 
 using System;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Archives
+namespace LibIRD.DiscUtils.Archives
 {
     internal sealed class TarHeader
     {

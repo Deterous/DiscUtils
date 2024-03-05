@@ -23,7 +23,7 @@
 using System;
 using System.IO;
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     /// <summary>
     /// Aligns I/O to a given block size.

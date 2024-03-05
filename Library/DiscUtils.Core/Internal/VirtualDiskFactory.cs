@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace DiscUtils.Internal
+namespace LibIRD.DiscUtils.Internal
 {
     public abstract class VirtualDiskFactory
     {

@@ -22,9 +22,9 @@
 
 using System;
 using System.Text;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Partitions
+namespace LibIRD.DiscUtils.Partitions
 {
     internal class GptEntry : IComparable<GptEntry>
     {

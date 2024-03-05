@@ -23,7 +23,7 @@
 using System;
 using System.IO;
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     /// <summary>
     /// Base class for reading binary data from a stream.

@@ -20,15 +20,15 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-using DiscUtils.CoreCompat;
-using DiscUtils.Streams;
-using DiscUtils.Vfs;
+using LibIRD.DiscUtils.CoreCompat;
+using LibIRD.DiscUtils.Streams;
+using LibIRD.DiscUtils.Vfs;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
-namespace DiscUtils.Iso9660
+namespace LibIRD.DiscUtils.Iso9660
 {
     internal class ReaderDirectory : File, IVfsDirectory<ReaderDirEntry, File>
     {

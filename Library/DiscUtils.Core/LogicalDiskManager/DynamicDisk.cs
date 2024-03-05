@@ -22,10 +22,10 @@
 
 using System;
 using System.IO;
-using DiscUtils.Partitions;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Partitions;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.LogicalDiskManager
+namespace LibIRD.DiscUtils.LogicalDiskManager
 {
     internal class DynamicDisk : IDiagnosticTraceable
     {

@@ -24,10 +24,10 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using DiscUtils.CoreCompat;
-using DiscUtils.Internal;
+using LibIRD.DiscUtils.CoreCompat;
+using LibIRD.DiscUtils.Internal;
 
-namespace DiscUtils.Iso9660
+namespace LibIRD.DiscUtils.Iso9660
 {
     /// <summary>
     /// Represents a file that will be built into the ISO image.

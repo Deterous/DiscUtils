@@ -24,10 +24,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using DiscUtils.CoreCompat;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.CoreCompat;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Iso9660
+namespace LibIRD.DiscUtils.Iso9660
 {
     /// <summary>
     /// Represents a directory that will be built into the ISO image.

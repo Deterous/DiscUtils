@@ -23,9 +23,9 @@
 using System;
 using System.Globalization;
 using System.IO;
-using DiscUtils.Internal;
+using LibIRD.DiscUtils.Internal;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     [VirtualDiskTransport("file")]
     internal sealed class FileTransport : VirtualDiskTransport

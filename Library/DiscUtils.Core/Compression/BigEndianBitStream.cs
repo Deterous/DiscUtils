@@ -22,7 +22,7 @@
 
 using System.IO;
 
-namespace DiscUtils.Compression
+namespace LibIRD.DiscUtils.Compression
 {
     /// <summary>
     /// Converts a byte stream into a bit stream.

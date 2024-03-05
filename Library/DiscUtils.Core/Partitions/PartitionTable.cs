@@ -24,11 +24,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using DiscUtils.CoreCompat;
-using DiscUtils.Raw;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.CoreCompat;
+using LibIRD.DiscUtils.Raw;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Partitions
+namespace LibIRD.DiscUtils.Partitions
 {
     /// <summary>
     /// Base class for classes which represent a disk partitioning scheme.

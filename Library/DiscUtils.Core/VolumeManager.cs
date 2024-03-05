@@ -25,13 +25,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-using DiscUtils.CoreCompat;
-using DiscUtils.Internal;
-using DiscUtils.Partitions;
-using DiscUtils.Raw;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.CoreCompat;
+using LibIRD.DiscUtils.Internal;
+using LibIRD.DiscUtils.Partitions;
+using LibIRD.DiscUtils.Raw;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// VolumeManager interprets partitions and other on-disk structures (possibly combining multiple disks).

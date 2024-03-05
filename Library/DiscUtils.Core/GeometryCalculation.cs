@@ -1,4 +1,4 @@
-﻿namespace DiscUtils
+﻿namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Delegate for calculating a disk geometry from a capacity.

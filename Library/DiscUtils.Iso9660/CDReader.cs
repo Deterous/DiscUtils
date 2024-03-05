@@ -21,10 +21,10 @@
 //
 
 using System.IO;
-using DiscUtils.Streams;
-using DiscUtils.Vfs;
+using LibIRD.DiscUtils.Streams;
+using LibIRD.DiscUtils.Vfs;
 
-namespace DiscUtils.Iso9660
+namespace LibIRD.DiscUtils.Iso9660
 {
     /// <summary>
     /// Class for reading existing ISO images.

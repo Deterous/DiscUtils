@@ -22,7 +22,7 @@
 
 using System.Security.AccessControl;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Provides the base class for all file systems that support Windows semantics.

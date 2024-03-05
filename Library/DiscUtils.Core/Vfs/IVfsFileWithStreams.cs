@@ -1,6 +1,6 @@
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Vfs
+namespace LibIRD.DiscUtils.Vfs
 {
     /// <summary>
     /// Interface implemented by classes representing files, in file systems that support multi-stream files.

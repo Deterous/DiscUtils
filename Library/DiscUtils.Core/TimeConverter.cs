@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Converts a time to/from UTC.

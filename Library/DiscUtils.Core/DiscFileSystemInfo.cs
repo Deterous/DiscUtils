@@ -22,9 +22,9 @@
 
 using System;
 using System.IO;
-using DiscUtils.Internal;
+using LibIRD.DiscUtils.Internal;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Provides the base class for both <see cref="DiscFileInfo"/> and <see cref="DiscDirectoryInfo"/> objects.

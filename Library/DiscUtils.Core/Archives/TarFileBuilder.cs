@@ -23,9 +23,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Archives
+namespace LibIRD.DiscUtils.Archives
 {
     /// <summary>
     /// Builder to create UNIX Tar archive files.

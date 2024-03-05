@@ -26,7 +26,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace DiscUtils.Internal
+namespace LibIRD.DiscUtils.Internal
 {
     internal static class Utilities
     {

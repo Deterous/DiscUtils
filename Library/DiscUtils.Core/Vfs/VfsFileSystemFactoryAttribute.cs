@@ -22,7 +22,7 @@
 
 using System;
 
-namespace DiscUtils.Vfs
+namespace LibIRD.DiscUtils.Vfs
 {
     /// <summary>
     /// Attribute identifying file system factory classes.

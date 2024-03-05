@@ -22,7 +22,7 @@
 
 using System;
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     public static class EndianUtilities
     {

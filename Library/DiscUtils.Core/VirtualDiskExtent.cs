@@ -21,9 +21,9 @@
 //
 
 using System;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Base class represented a stored extent of a virtual disk.

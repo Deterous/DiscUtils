@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DiscUtils.Internal
+namespace LibIRD.DiscUtils.Internal
 {
     /// <summary>
     /// Caches objects.

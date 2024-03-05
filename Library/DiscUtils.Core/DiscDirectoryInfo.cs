@@ -21,9 +21,9 @@
 //
 
 using System.IO;
-using DiscUtils.Internal;
+using LibIRD.DiscUtils.Internal;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Provides information about a directory on a disc.

@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Common parameters for virtual disks.

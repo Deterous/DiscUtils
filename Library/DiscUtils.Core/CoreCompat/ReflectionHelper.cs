@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace DiscUtils.CoreCompat
+namespace LibIRD.DiscUtils.CoreCompat
 {
     internal static class ReflectionHelper
     {

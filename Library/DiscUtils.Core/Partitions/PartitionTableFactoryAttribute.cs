@@ -22,7 +22,7 @@
 
 using System;
 
-namespace DiscUtils.Partitions
+namespace LibIRD.DiscUtils.Partitions
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     internal sealed class PartitionTableFactoryAttribute : Attribute {}

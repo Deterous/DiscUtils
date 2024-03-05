@@ -20,7 +20,7 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-namespace DiscUtils.Archives
+namespace LibIRD.DiscUtils.Archives
 {
     internal sealed class FileRecord
     {

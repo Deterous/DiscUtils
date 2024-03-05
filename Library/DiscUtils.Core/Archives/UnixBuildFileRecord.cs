@@ -22,9 +22,9 @@
 
 using System;
 using System.IO;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Archives
+namespace LibIRD.DiscUtils.Archives
 {
     internal sealed class UnixBuildFileRecord
     {

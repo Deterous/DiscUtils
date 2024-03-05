@@ -24,11 +24,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using DiscUtils.Internal;
-using DiscUtils.Partitions;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Internal;
+using LibIRD.DiscUtils.Partitions;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils
+namespace LibIRD.DiscUtils
 {
     /// <summary>
     /// Base class representing virtual hard disks.

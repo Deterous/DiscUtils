@@ -22,9 +22,9 @@
 
 using System.IO;
 using System.Text;
-using DiscUtils.Streams;
+using LibIRD.DiscUtils.Streams;
 
-namespace DiscUtils.Iso9660
+namespace LibIRD.DiscUtils.Iso9660
 {
     internal class FileExtent : BuilderExtent
     {

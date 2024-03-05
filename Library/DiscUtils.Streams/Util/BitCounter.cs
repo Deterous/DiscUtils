@@ -22,7 +22,7 @@
 
 using System;
 
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     /// <summary>
     /// Helper to count the number of bits set in a byte or byte[]

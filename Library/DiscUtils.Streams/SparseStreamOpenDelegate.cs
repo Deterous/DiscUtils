@@ -1,4 +1,4 @@
-namespace DiscUtils.Streams
+namespace LibIRD.DiscUtils.Streams
 {
     public delegate SparseStream SparseStreamOpenDelegate();
 }
