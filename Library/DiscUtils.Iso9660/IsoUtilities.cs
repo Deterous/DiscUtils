@@ -34,75 +34,13 @@ namespace LibIRD.DiscUtils.Iso9660
 
         public static uint ToUInt32FromBoth(byte[] data, int offset)
         {
-            return EndianUtilities.ToUInt32LittleEndian(data, offset);
+            return (uint)(((data[offset + 3] << 24) & 0xFF000000U) | ((data[offset + 2] << 16) & 0x00FF0000U)
+                          | ((data[offset + 1] << 8) & 0x0000FF00U) | ((data[offset + 0] << 0) & 0x000000FFU));
         }
 
         public static ushort ToUInt16FromBoth(byte[] data, int offset)
         {
-            return EndianUtilities.ToUInt16LittleEndian(data, offset);
-        }
-
-        internal static void ToBothFromUInt32(byte[] buffer, int offset, uint value)
-        {
-            EndianUtilities.WriteBytesLittleEndian(value, buffer, offset);
-            EndianUtilities.WriteBytesBigEndian(value, buffer, offset + 4);
-        }
-
-        internal static void ToBothFromUInt16(byte[] buffer, int offset, ushort value)
-        {
-            EndianUtilities.WriteBytesLittleEndian(value, buffer, offset);
-            EndianUtilities.WriteBytesBigEndian(value, buffer, offset + 2);
-        }
-
-        internal static void ToBytesFromUInt32(byte[] buffer, int offset, uint value)
-        {
-            EndianUtilities.WriteBytesLittleEndian(value, buffer, offset);
-        }
-
-        internal static void WriteAChars(byte[] buffer, int offset, int numBytes, string str)
-        {
-            // Validate string
-            if (!IsValidAString(str))
-            {
-                throw new IOException("Attempt to write string with invalid a-characters");
-            }
-
-            ////WriteASCII(buffer, offset, numBytes, true, str);
-            WriteString(buffer, offset, numBytes, true, str, Encoding.ASCII);
-        }
-
-        internal static void WriteDChars(byte[] buffer, int offset, int numBytes, string str)
-        {
-            // Validate string
-            if (!IsValidDString(str))
-            {
-                throw new IOException("Attempt to write string with invalid d-characters");
-            }
-
-            ////WriteASCII(buffer, offset, numBytes, true, str);
-            WriteString(buffer, offset, numBytes, true, str, Encoding.ASCII);
-        }
-
-        internal static void WriteA1Chars(byte[] buffer, int offset, int numBytes, string str, Encoding enc)
-        {
-            // Validate string
-            if (!IsValidAString(str))
-            {
-                throw new IOException("Attempt to write string with invalid a-characters");
-            }
-
-            WriteString(buffer, offset, numBytes, true, str, enc);
-        }
-
-        internal static void WriteD1Chars(byte[] buffer, int offset, int numBytes, string str, Encoding enc)
-        {
-            // Validate string
-            if (!IsValidDString(str))
-            {
-                throw new IOException("Attempt to write string with invalid d-characters");
-            }
-
-            WriteString(buffer, offset, numBytes, true, str, enc);
+            return (ushort)(((data[offset + 1] << 8) & 0xFF00) | ((data[offset + 0] << 0) & 0x00FF));
         }
 
         internal static string ReadChars(byte[] buffer, int offset, int numBytes, Encoding enc)
@@ -125,71 +63,6 @@ namespace LibIRD.DiscUtils.Iso9660
             return new string(chars).TrimEnd(' ');
         }
 
-        internal static int WriteString(byte[] buffer, int offset, int numBytes, bool pad, string str, Encoding enc)
-        {
-            return WriteString(buffer, offset, numBytes, pad, str, enc, false);
-        }
-
-        internal static int WriteString(byte[] buffer, int offset, int numBytes, bool pad, string str, Encoding enc,
-                                        bool canTruncate)
-        {
-            Encoder encoder = enc.GetEncoder();
-
-            string paddedString = pad ? str + new string(' ', numBytes) : str;
-
-            // Assumption: never less than one byte per character
-
-            int charsUsed;
-            int bytesUsed;
-            bool completed;
-            encoder.Convert(paddedString.ToCharArray(), 0, paddedString.Length, buffer, offset, numBytes, false,
-                out charsUsed, out bytesUsed, out completed);
-
-            if (!canTruncate && charsUsed < str.Length)
-            {
-                throw new IOException("Failed to write entire string");
-            }
-
-            return bytesUsed;
-        }
-
-        internal static bool IsValidAString(string str)
-        {
-            for (int i = 0; i < str.Length; ++i)
-            {
-                if (!(
-                    (str[i] >= ' ' && str[i] <= '\"')
-                    || (str[i] >= '%' && str[i] <= '/')
-                    || (str[i] >= ':' && str[i] <= '?')
-                    || (str[i] >= '0' && str[i] <= '9')
-                    || (str[i] >= 'A' && str[i] <= 'Z')
-                    || (str[i] == '_')))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        internal static bool IsValidDString(string str)
-        {
-            for (int i = 0; i < str.Length; ++i)
-            {
-                if (!IsValidDChar(str[i]))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        internal static bool IsValidDChar(char ch)
-        {
-            return (ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch == '_');
-        }
-
         internal static string NormalizeFileName(string name)
         {
             string[] parts = SplitFileName(name);
@@ -198,7 +71,7 @@ namespace LibIRD.DiscUtils.Iso9660
 
         internal static string[] SplitFileName(string name)
         {
-            string[] parts = { name, string.Empty, "1" };
+            string[] parts = [name, string.Empty, "1"];
 
             if (name.Contains("."))
             {
@@ -225,8 +98,7 @@ namespace LibIRD.DiscUtils.Iso9660
                 }
             }
 
-            ushort ver;
-            if (!ushort.TryParse(parts[2], out ver) || ver > 32767 || ver < 1)
+            if (!ushort.TryParse(parts[2], out ushort ver) || ver > 32767 || ver < 1)
             {
                 ver = 1;
             }
@@ -246,7 +118,7 @@ namespace LibIRD.DiscUtils.Iso9660
         {
             try
             {
-                DateTime relTime = new DateTime(
+                DateTime relTime = new(
                     1900 + data[offset],
                     data[offset + 1],
                     data[offset + 2],
@@ -260,29 +132,6 @@ namespace LibIRD.DiscUtils.Iso9660
             {
                 // In case the ISO has a bad date encoded, we'll just fall back to using a fixed date
                 return DateTime.MinValue;
-            }
-        }
-
-        internal static void ToDirectoryTimeFromUTC(byte[] data, int offset, DateTime dateTime)
-        {
-            if (dateTime == DateTime.MinValue)
-            {
-                Array.Clear(data, offset, 7);
-            }
-            else
-            {
-                if (dateTime.Year < 1900)
-                {
-                    throw new IOException("Year is out of range");
-                }
-
-                data[offset] = (byte)(dateTime.Year - 1900);
-                data[offset + 1] = (byte)dateTime.Month;
-                data[offset + 2] = (byte)dateTime.Day;
-                data[offset + 3] = (byte)dateTime.Hour;
-                data[offset + 4] = (byte)dateTime.Minute;
-                data[offset + 5] = (byte)dateTime.Second;
-                data[offset + 6] = 0;
             }
         }
 
@@ -318,49 +167,12 @@ namespace LibIRD.DiscUtils.Iso9660
 
             try
             {
-                DateTime time = new DateTime(year, month, day, hour, min, sec, hundredths * 10, DateTimeKind.Utc);
+                DateTime time = new(year, month, day, hour, min, sec, hundredths * 10, DateTimeKind.Utc);
                 return time - TimeSpan.FromMinutes(15 * (sbyte)data[offset + 16]);
             }
             catch (ArgumentOutOfRangeException)
             {
                 return DateTime.MinValue;
-            }
-        }
-
-        internal static void ToVolumeDescriptorTimeFromUTC(byte[] buffer, int offset, DateTime dateTime)
-        {
-            if (dateTime == DateTime.MinValue)
-            {
-                for (int i = offset; i < offset + 16; ++i)
-                {
-                    buffer[i] = (byte)'0';
-                }
-
-                buffer[offset + 16] = 0;
-                return;
-            }
-
-            string strForm = dateTime.ToString("yyyyMMddHHmmssff", CultureInfo.InvariantCulture);
-            EndianUtilities.StringToBytes(strForm, buffer, offset, 16);
-            buffer[offset + 16] = 0;
-        }
-
-        internal static void EncodingToBytes(Encoding enc, byte[] data, int offset)
-        {
-            Array.Clear(data, offset, 32);
-            if (enc == Encoding.ASCII)
-            {
-                // Nothing to do
-            }
-            else if (enc == Encoding.BigEndianUnicode)
-            {
-                data[offset + 0] = 0x25;
-                data[offset + 1] = 0x2F;
-                data[offset + 2] = 0x45;
-            }
-            else
-            {
-                throw new ArgumentException("Unrecognized character encoding");
             }
         }
 
@@ -384,20 +196,14 @@ namespace LibIRD.DiscUtils.Iso9660
 
         private static int SafeParseInt(int minVal, int maxVal, string str)
         {
-            int val;
-            if (!int.TryParse(str, out val))
-            {
+            if (!int.TryParse(str, out int val))
                 return minVal;
-            }
 
             if (val < minVal)
-            {
                 return minVal;
-            }
             if (val > maxVal)
-            {
                 return maxVal;
-            }
+
             return val;
         }
     }

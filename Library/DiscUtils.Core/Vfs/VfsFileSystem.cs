@@ -169,7 +169,7 @@ namespace LibIRD.DiscUtils.Vfs
 
             TDirectory parentDir = GetDirectory(path);
 
-            List<string> result = new List<string>();
+            List<string> result = [];
             foreach (TDirEntry dirEntry in parentDir.AllEntries)
             {
                 if (re.IsMatch(dirEntry.SearchName))
@@ -246,39 +246,23 @@ namespace LibIRD.DiscUtils.Vfs
             }
             TFile file = GetFile(entry);
 
-            SparseStream stream = null;
+            SparseStream stream;
             if (string.IsNullOrEmpty(attributeName))
             {
                 stream = new BufferStream(file.FileContent, access);
             }
             else
             {
-                IVfsFileWithStreams fileStreams = file as IVfsFileWithStreams;
-                if (fileStreams != null)
+                if (file is IVfsFileWithStreams fileStreams)
                 {
                     stream = fileStreams.OpenExistingStream(attributeName);
                     if (stream == null)
-                    {
-                        if (mode == FileMode.Create || mode == FileMode.OpenOrCreate)
-                        {
-                            stream = fileStreams.CreateStream(attributeName);
-                        }
-                        else
-                        {
-                            throw new FileNotFoundException("No such attribute on file", path);
-                        }
-                    }
+                        throw new FileNotFoundException("No such attribute on file", path);
                 }
                 else
                 {
-                    throw new NotSupportedException(
-                        "Attempt to open a file stream on a file system that doesn't support them");
+                    throw new NotSupportedException("Attempt to open a file stream on a file system that doesn't support them");
                 }
-            }
-
-            if (mode == FileMode.Create || mode == FileMode.Truncate)
-            {
-                stream.SetLength(0);
             }
 
             return stream;
@@ -386,14 +370,10 @@ namespace LibIRD.DiscUtils.Vfs
             }
             if (path == null)
             {
-                return default(TFile);
+                return default;
             }
 
-            TDirEntry dirEntry = GetDirectoryEntry(path);
-            if (dirEntry == null)
-            {
-                throw new FileNotFoundException("No such file or directory", path);
-            }
+            TDirEntry dirEntry = GetDirectoryEntry(path) ?? throw new FileNotFoundException("No such file or directory", path);
 
             return GetFile(dirEntry);
         }
@@ -457,12 +437,7 @@ namespace LibIRD.DiscUtils.Vfs
 
         private void DoSearch(List<string> results, string path, Regex regex, bool subFolders, bool dirs, bool files)
         {
-            TDirectory parentDir = GetDirectory(path);
-            if (parentDir == null)
-            {
-                throw new DirectoryNotFoundException(string.Format(CultureInfo.InvariantCulture,
-                    "The directory '{0}' was not found", path));
-            }
+            TDirectory parentDir = GetDirectory(path) ?? throw new DirectoryNotFoundException(string.Format(CultureInfo.InvariantCulture, "The directory '{0}' was not found", path));
 
             string resultPrefixPath = path;
             if (IsRoot(path))
@@ -512,11 +487,7 @@ namespace LibIRD.DiscUtils.Vfs
             int resolvesLeft = 20;
             while (currentEntry.IsSymlink && resolvesLeft > 0)
             {
-                IVfsSymlink<TDirEntry, TFile> symlink = GetFile(currentEntry) as IVfsSymlink<TDirEntry, TFile>;
-                if (symlink == null)
-                {
-                    throw new FileNotFoundException("Unable to resolve symlink", path);
-                }
+                IVfsSymlink<TDirEntry, TFile> symlink = GetFile(currentEntry) as IVfsSymlink<TDirEntry, TFile> ?? throw new FileNotFoundException("Unable to resolve symlink", path);
 
                 currentPath = Utilities.ResolvePath(currentPath.TrimEnd('\\'), symlink.TargetPath);
                 currentEntry = GetDirectoryEntry(currentPath);

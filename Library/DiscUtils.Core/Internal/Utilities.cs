@@ -51,159 +51,6 @@ namespace LibIRD.DiscUtils.Internal
             return result;
         }
 
-        /// <summary>
-        /// Converts between two arrays.
-        /// </summary>
-        /// <typeparam name="T">The type of the elements of the source array.</typeparam>
-        /// <typeparam name="U">The type of the elements of the destination array.</typeparam>
-        /// <param name="source">The source array.</param>
-        /// <param name="func">The function to map from source type to destination type.</param>
-        /// <returns>The resultant array.</returns>
-        public static U[] Map<T, U>(IEnumerable<T> source, Func<T, U> func)
-        {
-            List<U> result = new List<U>();
-
-            foreach (T sVal in source)
-            {
-                result.Add(func(sVal));
-            }
-
-            return result.ToArray();
-        }
-
-        /// <summary>
-        /// Filters a collection into a new collection.
-        /// </summary>
-        /// <typeparam name="C">The type of the new collection.</typeparam>
-        /// <typeparam name="T">The type of the collection entries.</typeparam>
-        /// <param name="source">The collection to filter.</param>
-        /// <param name="predicate">The predicate to select which entries are carried over.</param>
-        /// <returns>The new collection, containing all entries where the predicate returns <c>true</c>.</returns>
-        public static C Filter<C, T>(ICollection<T> source, Func<T, bool> predicate) where C : ICollection<T>, new()
-        {
-            C result = new C();
-            foreach (T val in source)
-            {
-                if (predicate(val))
-                {
-                    result.Add(val);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Indicates if two ranges overlap.
-        /// </summary>
-        /// <typeparam name="T">The type of the ordinals.</typeparam>
-        /// <param name="xFirst">The lowest ordinal of the first range (inclusive).</param>
-        /// <param name="xLast">The highest ordinal of the first range (exclusive).</param>
-        /// <param name="yFirst">The lowest ordinal of the second range (inclusive).</param>
-        /// <param name="yLast">The highest ordinal of the second range (exclusive).</param>
-        /// <returns><c>true</c> if the ranges overlap, else <c>false</c>.</returns>
-        public static bool RangesOverlap<T>(T xFirst, T xLast, T yFirst, T yLast) where T : IComparable<T>
-        {
-            return !((xLast.CompareTo(yFirst) <= 0) || (xFirst.CompareTo(yLast) >= 0));
-        }
-        
-        #region Bit Twiddling
-
-        public static bool IsAllZeros(byte[] buffer, int offset, int count)
-        {
-            int end = offset + count;
-            for (int i = offset; i < end; ++i)
-            {
-                if (buffer[i] != 0)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        public static bool IsPowerOfTwo(uint val)
-        {
-            if (val == 0)
-            {
-                return false;
-            }
-
-            while ((val & 1) != 1)
-            {
-                val >>= 1;
-            }
-
-            return val == 1;
-        }
-
-        public static bool IsPowerOfTwo(long val)
-        {
-            if (val == 0)
-            {
-                return false;
-            }
-
-            while ((val & 1) != 1)
-            {
-                val >>= 1;
-            }
-
-            return val == 1;
-        }
-
-        public static bool AreEqual(byte[] a, byte[] b)
-        {
-            if (a.Length != b.Length)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < a.Length; ++i)
-            {
-                if (a[i] != b[i])
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        public static ushort BitSwap(ushort value)
-        {
-            return (ushort)(((value & 0x00FF) << 8) | ((value & 0xFF00) >> 8));
-        }
-
-        public static uint BitSwap(uint value)
-        {
-            return ((value & 0xFF) << 24) | ((value & 0xFF00) << 8) | ((value & 0x00FF0000) >> 8) |
-                   ((value & 0xFF000000) >> 24);
-        }
-
-        public static ulong BitSwap(ulong value)
-        {
-            return ((ulong)BitSwap((uint)(value & 0xFFFFFFFF)) << 32) | BitSwap((uint)(value >> 32));
-        }
-
-        public static short BitSwap(short value)
-        {
-            return (short)BitSwap((ushort)value);
-        }
-
-        public static int BitSwap(int value)
-        {
-            return (int)BitSwap((uint)value);
-        }
-
-        public static long BitSwap(long value)
-        {
-            return (long)BitSwap((ulong)value);
-        }
-        
-        #endregion
-
         #region Path Manipulation
 
         /// <summary>
@@ -303,121 +150,9 @@ namespace LibIRD.DiscUtils.Internal
             return path;
         }
 
-        public static string MakeRelativePath(string path, string basePath)
-        {
-            List<string> pathElements =
-                new List<string>(path.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries));
-            List<string> basePathElements =
-                new List<string>(basePath.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries));
-
-            if (!basePath.EndsWith("\\", StringComparison.Ordinal) && basePathElements.Count > 0)
-            {
-                basePathElements.RemoveAt(basePathElements.Count - 1);
-            }
-
-            // Find first part of paths that don't match
-            int i = 0;
-            while (i < Math.Min(pathElements.Count - 1, basePathElements.Count))
-            {
-                if (pathElements[i].ToUpperInvariant() != basePathElements[i].ToUpperInvariant())
-                {
-                    break;
-                }
-
-                ++i;
-            }
-
-            // For each remaining part of the base path, insert '..'
-            StringBuilder result = new StringBuilder();
-            if (i == basePathElements.Count)
-            {
-                result.Append(@".\");
-            }
-            else if (i < basePathElements.Count)
-            {
-                for (int j = 0; j < basePathElements.Count - i; ++j)
-                {
-                    result.Append(@"..\");
-                }
-            }
-
-            // For each remaining part of the path, add the path element
-            for (int j = i; j < pathElements.Count - 1; ++j)
-            {
-                result.Append(pathElements[j]);
-                result.Append(@"\");
-            }
-
-            result.Append(pathElements[pathElements.Count - 1]);
-
-            // If the target was a directory, put the terminator back
-            if (path.EndsWith(@"\", StringComparison.Ordinal))
-            {
-                result.Append(@"\");
-            }
-
-            return result.ToString();
-        }
-
         #endregion
         
         #region Filesystem Support
-
-        /// <summary>
-        /// Indicates if a file name matches the 8.3 pattern.
-        /// </summary>
-        /// <param name="name">The name to test.</param>
-        /// <returns><c>true</c> if the name is 8.3, otherwise <c>false</c>.</returns>
-        public static bool Is8Dot3(string name)
-        {
-            if (name.Length > 12)
-            {
-                return false;
-            }
-
-            string[] split = name.Split('.');
-
-            if (split.Length > 2 || split.Length < 1)
-            {
-                return false;
-            }
-
-            if (split[0].Length > 8)
-            {
-                return false;
-            }
-
-            foreach (char ch in split[0])
-            {
-                if (!Is8Dot3Char(ch))
-                {
-                    return false;
-                }
-            }
-
-            if (split.Length > 1)
-            {
-                if (split[1].Length > 3)
-                {
-                    return false;
-                }
-
-                foreach (char ch in split[1])
-                {
-                    if (!Is8Dot3Char(ch))
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        public static bool Is8Dot3Char(char ch)
-        {
-            return (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9') || "_^$~!#%£-{}()@'`&".IndexOf(ch) != -1;
-        }
 
         /// <summary>
         /// Converts a 'standard' wildcard file/path specification into a regular expression.
@@ -441,25 +176,17 @@ namespace LibIRD.DiscUtils.Internal
 
         public static FileAttributes FileAttributesFromUnixFileType(UnixFileType fileType)
         {
-            switch (fileType)
+            return fileType switch
             {
-                case UnixFileType.Fifo:
-                    return FileAttributes.Device | FileAttributes.System;
-                case UnixFileType.Character:
-                    return FileAttributes.Device | FileAttributes.System;
-                case UnixFileType.Directory:
-                    return FileAttributes.Directory;
-                case UnixFileType.Block:
-                    return FileAttributes.Device | FileAttributes.System;
-                case UnixFileType.Regular:
-                    return FileAttributes.Normal;
-                case UnixFileType.Link:
-                    return FileAttributes.ReparsePoint;
-                case UnixFileType.Socket:
-                    return FileAttributes.Device | FileAttributes.System;
-                default:
-                    return 0;
-            }
+                UnixFileType.Fifo => FileAttributes.Device | FileAttributes.System,
+                UnixFileType.Character => FileAttributes.Device | FileAttributes.System,
+                UnixFileType.Directory => FileAttributes.Directory,
+                UnixFileType.Block => FileAttributes.Device | FileAttributes.System,
+                UnixFileType.Regular => FileAttributes.Normal,
+                UnixFileType.Link => FileAttributes.ReparsePoint,
+                UnixFileType.Socket => FileAttributes.Device | FileAttributes.System,
+                _ => 0,
+            };
         }
 
         #endregion

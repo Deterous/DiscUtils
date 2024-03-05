@@ -31,7 +31,7 @@ namespace LibIRD.DiscUtils.Iso9660
 
         public SuspRecords(IsoContext context, byte[] data, int offset)
         {
-            _records = new Dictionary<string, Dictionary<string, List<SystemUseEntry>>>();
+            _records = [];
 
             ContinuationSystemUseEntry contEntry = Parse(context, data, offset + context.SuspSkipBytes);
             while (contEntry != null)
@@ -47,9 +47,7 @@ namespace LibIRD.DiscUtils.Iso9660
         public static bool DetectSharingProtocol(byte[] data, int offset)
         {
             if (data == null || data.Length - offset < 7)
-            {
                 return false;
-            }
 
             return data[offset] == 83
                    && data[offset + 1] == 80
@@ -62,21 +60,13 @@ namespace LibIRD.DiscUtils.Iso9660
         public List<SystemUseEntry> GetEntries(string extension, string name)
         {
             if (string.IsNullOrEmpty(extension))
-            {
                 extension = string.Empty;
-            }
 
-            Dictionary<string, List<SystemUseEntry>> extensionData;
-            if (!_records.TryGetValue(extension, out extensionData))
-            {
+            if (!_records.TryGetValue(extension, out Dictionary<string, List<SystemUseEntry>> extensionData))
                 return null;
-            }
 
-            List<SystemUseEntry> result;
-            if (extensionData.TryGetValue(name, out result))
-            {
+            if (extensionData.TryGetValue(name, out List<SystemUseEntry> result))
                 return result;
-            }
 
             return null;
         }
@@ -86,14 +76,10 @@ namespace LibIRD.DiscUtils.Iso9660
         {
             List<SystemUseEntry> entries = GetEntries(extension, name);
             if (entries == null)
-            {
                 return null;
-            }
 
             foreach (T entry in entries)
-            {
                 return entry;
-            }
 
             return null;
         }
@@ -110,16 +96,13 @@ namespace LibIRD.DiscUtils.Iso9660
             SuspExtension extension = null;
 
             if (context.SuspExtensions != null && context.SuspExtensions.Count > 0)
-            {
                 extension = context.SuspExtensions[0];
-            }
 
             int pos = offset;
             while (data.Length - pos > 4)
             {
-                byte len;
                 SystemUseEntry entry = SystemUseEntry.Parse(data, pos, context.VolumeDescriptor.CharacterEncoding,
-                    extension, out len);
+                    extension, out byte len);
                 pos += len;
 
                 if (entry == null)
@@ -162,19 +145,11 @@ namespace LibIRD.DiscUtils.Iso9660
         {
             string extensionId = extension == null ? string.Empty : extension.Identifier;
 
-            Dictionary<string, List<SystemUseEntry>> extensionEntries;
-            if (!_records.TryGetValue(extensionId, out extensionEntries))
-            {
-                extensionEntries = new Dictionary<string, List<SystemUseEntry>>();
-                _records.Add(extensionId, extensionEntries);
-            }
+            if (!_records.TryGetValue(extensionId, out Dictionary<string, List<SystemUseEntry>> extensionEntries))
+                _records.Add(extensionId, []);
 
-            List<SystemUseEntry> entries;
-            if (!extensionEntries.TryGetValue(entry.Name, out entries))
-            {
-                entries = new List<SystemUseEntry>();
-                extensionEntries.Add(entry.Name, entries);
-            }
+            if (!extensionEntries.TryGetValue(entry.Name, out List<SystemUseEntry> entries))
+                extensionEntries.Add(entry.Name, []);
 
             entries.Add(entry);
         }

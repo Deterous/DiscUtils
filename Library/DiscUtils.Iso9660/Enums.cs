@@ -20,6 +20,8 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
+using System;
+
 namespace LibIRD.DiscUtils.Iso9660
 {
     /// <summary>
@@ -56,5 +58,26 @@ namespace LibIRD.DiscUtils.Iso9660
         /// Rock Ridge (Unix).
         /// </summary>
         RockRidge
+    }
+
+    [Flags]
+    internal enum FileFlags : byte
+    {
+        None = 0x00,
+        Hidden = 0x01,
+        Directory = 0x02,
+        AssociatedFile = 0x04,
+        Record = 0x08,
+        Protection = 0x10,
+        MultiExtent = 0x80
+    }
+
+    internal enum VolumeDescriptorType : byte
+    {
+        Boot = 0,
+        Primary = 1,
+        Supplementary = 2,
+        Partition = 3,
+        SetTerminator = 255
     }
 }

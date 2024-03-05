@@ -55,7 +55,6 @@ namespace LibIRD.DiscUtils.Iso9660
             byte flags = data[offset + 4];
 
             bool longForm = (flags & 0x80) != 0;
-            int fieldLen = longForm ? 17 : 7;
 
             TimestampsPresent = (Timestamps)(flags & 0x7F);
 

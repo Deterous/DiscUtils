@@ -79,7 +79,7 @@ namespace LibIRD.DiscUtils.Streams
         /// <returns>An enumeration of stream extents, indicating stored bytes.</returns>
         public virtual IEnumerable<StreamExtent> GetExtentsInRange(long start, long count)
         {
-            return StreamExtent.Intersect(Extents, new[] { new StreamExtent(start, count) });
+            return StreamExtent.Intersect(Extents, [new StreamExtent(start, count)]);
         }
 
         private class SparseWrapperStream : SparseStream
@@ -118,15 +118,11 @@ namespace LibIRD.DiscUtils.Streams
                 get
                 {
                     if (_extents != null)
-                    {
                         return _extents;
-                    }
-                    SparseStream wrappedAsSparse = _wrapped as SparseStream;
-                    if (wrappedAsSparse != null)
-                    {
+                    if (_wrapped is SparseStream wrappedAsSparse)
                         return wrappedAsSparse.Extents;
-                    }
-                    return new[] { new StreamExtent(0, _wrapped.Length) };
+
+                    return [new StreamExtent(0, _wrapped.Length)];
                 }
             }
 

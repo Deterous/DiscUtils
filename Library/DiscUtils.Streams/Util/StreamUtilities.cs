@@ -36,24 +36,16 @@ namespace LibIRD.DiscUtils.Streams
         public static void AssertBufferParameters(byte[] buffer, int offset, int count)
         {
             if (buffer == null)
-            {
                 throw new ArgumentNullException(nameof(buffer));
-            }
 
             if (offset < 0)
-            {
                 throw new ArgumentOutOfRangeException(nameof(offset), offset, "Offset is negative");
-            }
 
             if (count < 0)
-            {
                 throw new ArgumentOutOfRangeException(nameof(count), count, "Count is negative");
-            }
 
             if (buffer.Length < offset + count)
-            {
                 throw new ArgumentException("buffer is too small", nameof(buffer));
-            }
         }
 
         #region Stream Manipulation
@@ -74,9 +66,7 @@ namespace LibIRD.DiscUtils.Streams
                 int numRead = stream.Read(buffer, offset, count);
 
                 if (numRead == 0)
-                {
                     throw new EndOfStreamException("Unable to complete read of " + originalCount + " bytes");
-                }
 
                 offset += numRead;
                 count -= numRead;

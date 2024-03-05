@@ -45,8 +45,8 @@ namespace LibIRD.DiscUtils.Internal
 
         public ObjectCache()
         {
-            _entries = new Dictionary<K, WeakReference>();
-            _recent = new List<KeyValuePair<K, V>>();
+            _entries = [];
+            _recent = [];
         }
 
         public V this[K key]
@@ -63,8 +63,7 @@ namespace LibIRD.DiscUtils.Internal
                     }
                 }
 
-                WeakReference wRef;
-                if (_entries.TryGetValue(key, out wRef))
+                if (_entries.TryGetValue(key, out WeakReference wRef))
                 {
                     V val = (V)wRef.Target;
                     if (val != null)
@@ -75,7 +74,7 @@ namespace LibIRD.DiscUtils.Internal
                     return val;
                 }
 
-                return default(V);
+                return default;
             }
 
             set
@@ -106,7 +105,7 @@ namespace LibIRD.DiscUtils.Internal
 
             if (_nextPruneCount > PruneGap)
             {
-                List<K> toPrune = new List<K>();
+                List<K> toPrune = [];
                 foreach (KeyValuePair<K, WeakReference> entry in _entries)
                 {
                     if (!entry.Value.IsAlive)

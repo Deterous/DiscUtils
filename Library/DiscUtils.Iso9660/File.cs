@@ -80,7 +80,7 @@ namespace LibIRD.DiscUtils.Iso9660
         {
             get
             {
-                ExtentStream es = new ExtentStream(_context.DataStream, _dirEntry.Record.LocationOfExtent,
+                ExtentStream es = new(_context.DataStream, _dirEntry.Record.LocationOfExtent,
                     _dirEntry.Record.DataLength, _dirEntry.Record.FileUnitSize, _dirEntry.Record.InterleaveGapSize);
                 return new StreamBuffer(es, Ownership.Dispose);
             }

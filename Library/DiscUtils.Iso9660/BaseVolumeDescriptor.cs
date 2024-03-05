@@ -20,7 +20,6 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-using System;
 using System.Text;
 
 namespace LibIRD.DiscUtils.Iso9660
@@ -32,13 +31,6 @@ namespace LibIRD.DiscUtils.Iso9660
         public readonly string StandardIdentifier;
         public readonly VolumeDescriptorType VolumeDescriptorType;
         public readonly byte VolumeDescriptorVersion;
-
-        public BaseVolumeDescriptor(VolumeDescriptorType type, byte version)
-        {
-            VolumeDescriptorType = type;
-            StandardIdentifier = "CD001";
-            VolumeDescriptorVersion = version;
-        }
 
         public BaseVolumeDescriptor(byte[] src, int offset)
         {

@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using LibIRD.DiscUtils.Streams;
 using LibIRD.DiscUtils.Vfs;
 
@@ -113,7 +114,9 @@ namespace LibIRD.DiscUtils.Iso9660
                         {
                             data.Position = svdPos;
                             data.Read(buffer, 0, IsoUtilities.SectorSize);
-                            SupplementaryVolumeDescriptor volDesc = new SupplementaryVolumeDescriptor(buffer, 0);
+
+                            // Supplementary Volume Descriptor
+                            CommonVolumeDescriptor volDesc = new(buffer, 0, IsoUtilities.EncodingFromBytes(buffer, 88));
 
                             Context = new IsoContext { VolumeDescriptor = volDesc, DataStream = _data };
                             RootDirectory = new ReaderDirectory(Context,
@@ -129,9 +132,9 @@ namespace LibIRD.DiscUtils.Iso9660
                         {
                             data.Position = pvdPos;
                             data.Read(buffer, 0, IsoUtilities.SectorSize);
-                            PrimaryVolumeDescriptor volDesc = new PrimaryVolumeDescriptor(buffer, 0);
+                            CommonVolumeDescriptor volDesc = new(buffer, 0, Encoding.ASCII);
 
-                            IsoContext context = new IsoContext { VolumeDescriptor = volDesc, DataStream = _data };
+                            IsoContext context = new() { VolumeDescriptor = volDesc, DataStream = _data };
                             DirectoryRecord rootSelfRecord = ReadRootSelfRecord(context);
 
                             InitializeSusp(context, rootSelfRecord);
@@ -166,13 +169,8 @@ namespace LibIRD.DiscUtils.Iso9660
 
         public Range<long, long>[] PathToClusters(string path)
         {
-            ReaderDirEntry entry = GetDirectoryEntry(path);
+            ReaderDirEntry entry = GetDirectoryEntry(path) ?? throw new FileNotFoundException("File not found", path);
 
-            if (entry == null)
-            {
-                throw new FileNotFoundException("File not found", path);
-            }
-            
             if (entry.IsDirectory)
             {
                 if (entry.Record.FileUnitSize != 0 || entry.Record.InterleaveGapSize != 0)
@@ -180,11 +178,11 @@ namespace LibIRD.DiscUtils.Iso9660
                     throw new NotSupportedException("Non-contiguous extents not supported");
                 }
 
-                return new[]
-                {
+                return
+                [
                     new Range<long, long>(entry.Record.LocationOfExtent,
                         (entry.Record.DataLength + (IsoUtilities.SectorSize - 1)) / IsoUtilities.SectorSize)
-                };
+                ];
             }
 
             int index = path.LastIndexOf('\\'); // Path.DirectorySeparatorChar ?
@@ -192,7 +190,7 @@ namespace LibIRD.DiscUtils.Iso9660
             string filename = path.Substring(index + 1);
 
             // Get all entries for file
-            ReaderDirectory rdr = new ReaderDirectory(Context, GetDirectoryEntry(dir));
+            ReaderDirectory rdr = new(Context, GetDirectoryEntry(dir));
             IEnumerable<ReaderDirEntry> dirEntries = rdr.GetEntriesByName(filename);
 
             // Return array of all clusters
@@ -223,16 +221,16 @@ namespace LibIRD.DiscUtils.Iso9660
         private static void InitializeSusp(IsoContext context, DirectoryRecord rootSelfRecord)
         {
             // Stage 1 - SUSP present?
-            List<SuspExtension> extensions = new List<SuspExtension>();
+            List<SuspExtension> extensions = [];
             if (!SuspRecords.DetectSharingProtocol(rootSelfRecord.SystemUseData, 0))
             {
-                context.SuspExtensions = new List<SuspExtension>();
+                context.SuspExtensions = [];
                 context.SuspDetected = false;
                 return;
             }
             context.SuspDetected = true;
 
-            SuspRecords suspRecords = new SuspRecords(context, rootSelfRecord.SystemUseData, 0);
+            SuspRecords suspRecords = new(context, rootSelfRecord.SystemUseData, 0);
 
             // Stage 2 - Init general SUSP params
             SharingProtocolSystemUseEntry spEntry =
@@ -277,8 +275,7 @@ namespace LibIRD.DiscUtils.Iso9660
                                           context.VolumeDescriptor.LogicalBlockSize;
             byte[] firstSector = StreamUtilities.ReadExact(context.DataStream, context.VolumeDescriptor.LogicalBlockSize);
 
-            DirectoryRecord rootSelfRecord;
-            DirectoryRecord.ReadFrom(firstSector, 0, context.VolumeDescriptor.CharacterEncoding, out rootSelfRecord);
+            DirectoryRecord.ReadFrom(firstSector, 0, context.VolumeDescriptor.CharacterEncoding, out DirectoryRecord rootSelfRecord);
             return rootSelfRecord;
         }
     }

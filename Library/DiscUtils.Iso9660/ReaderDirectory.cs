@@ -39,7 +39,7 @@ namespace LibIRD.DiscUtils.Iso9660
             byte[] buffer = new byte[IsoUtilities.SectorSize];
             Stream extent = new ExtentStream(_context.DataStream, dirEntry.Record.LocationOfExtent, uint.MaxValue, 0, 0);
 
-            _records = new List<ReaderDirEntry>();
+            _records = [];
 
             uint totalLength = dirEntry.Record.DataLength;
             uint totalRead = 0;
@@ -53,12 +53,11 @@ namespace LibIRD.DiscUtils.Iso9660
                 uint pos = 0;
                 while (pos < bytesRead && buffer[pos] != 0)
                 {
-                    DirectoryRecord dr;
-                    uint length = (uint)DirectoryRecord.ReadFrom(buffer, (int)pos, context.VolumeDescriptor.CharacterEncoding, out dr);
+                    uint length = (uint)DirectoryRecord.ReadFrom(buffer, (int)pos, context.VolumeDescriptor.CharacterEncoding, out DirectoryRecord dr);
 
                     if (!IsoUtilities.IsSpecialDirectory(dr))
                     {
-                        ReaderDirEntry childDirEntry = new ReaderDirEntry(_context, dr);
+                        ReaderDirEntry childDirEntry = new(_context, dr);
 
                         if (context.SuspDetected && !string.IsNullOrEmpty(context.RockRidgeIdentifier))
                         {

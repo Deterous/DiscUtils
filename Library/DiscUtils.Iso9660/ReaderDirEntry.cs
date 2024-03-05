@@ -53,7 +53,7 @@ namespace LibIRD.DiscUtils.Iso9660
             {
                 // The full name is taken from this record, even if it's a child-link record
                 List<SystemUseEntry> nameEntries = SuspRecords.GetEntries(_context.RockRidgeIdentifier, "NM");
-                StringBuilder rrName = new StringBuilder();
+                StringBuilder rrName = new();
                 if (nameEntries != null && nameEntries.Count > 0)
                 {
                     foreach (PosixNameSystemUseEntry nameEntry in nameEntries)

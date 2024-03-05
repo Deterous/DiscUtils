@@ -97,8 +97,7 @@ namespace LibIRD.DiscUtils.Streams
         /// <returns>The union of the extents.</returns>
         public static IEnumerable<StreamExtent> Union(IEnumerable<StreamExtent> extents, StreamExtent other)
         {
-            List<StreamExtent> otherList = new List<StreamExtent>();
-            otherList.Add(other);
+            List<StreamExtent> otherList = [other];
             return Union(extents, otherList);
         }
 
@@ -191,8 +190,7 @@ namespace LibIRD.DiscUtils.Streams
         /// <returns>The intersection of the extents.</returns>
         public static IEnumerable<StreamExtent> Intersect(IEnumerable<StreamExtent> extents, StreamExtent other)
         {
-            List<StreamExtent> otherList = new List<StreamExtent>(1);
-            otherList.Add(other);
+            List<StreamExtent> otherList = [other];
             return Intersect(extents, otherList);
         }
 
@@ -270,7 +268,7 @@ namespace LibIRD.DiscUtils.Streams
         /// <returns>The subtraction of <c>other</c> from <c>extents</c>.</returns>
         public static IEnumerable<StreamExtent> Subtract(IEnumerable<StreamExtent> extents, StreamExtent other)
         {
-            return Subtract(extents, new[] { other });
+            return Subtract(extents, [other]);
         }
 
         /// <summary>
@@ -296,29 +294,23 @@ namespace LibIRD.DiscUtils.Streams
         /// </remarks>
         public static IEnumerable<StreamExtent> Invert(IEnumerable<StreamExtent> extents)
         {
-            StreamExtent last = new StreamExtent(0, 0);
+            StreamExtent last = new(0, 0);
             foreach (StreamExtent extent in extents)
             {
                 // Skip over any 'noise'
                 if (extent.Length == 0)
-                {
                     continue;
-                }
 
                 long lastEnd = last.Start + last.Length;
                 if (lastEnd < extent.Start)
-                {
                     yield return new StreamExtent(lastEnd, extent.Start - lastEnd);
-                }
 
                 last = extent;
             }
 
             long finalEnd = last.Start + last.Length;
             if (finalEnd < long.MaxValue)
-            {
                 yield return new StreamExtent(finalEnd, long.MaxValue - finalEnd);
-            }
         }
 
         /// <summary>
@@ -330,9 +322,7 @@ namespace LibIRD.DiscUtils.Streams
         public static IEnumerable<StreamExtent> Offset(IEnumerable<StreamExtent> stream, long delta)
         {
             foreach (StreamExtent extent in stream)
-            {
                 yield return new StreamExtent(extent.Start + delta, extent.Length);
-            }
         }
 
         /// <summary>
