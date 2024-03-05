@@ -66,30 +66,11 @@ namespace LibIRD.DiscUtils
         public virtual DiscFileSystemOptions Options { get; }
 
         /// <summary>
-        /// Gets a friendly description of the file system type.
-        /// </summary>
-        public abstract string FriendlyName { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether the file system is read-only or read-write.
-        /// </summary>
-        /// <returns>true if the file system is read-write.</returns>
-        public abstract bool CanWrite { get; }
-
-        /// <summary>
         /// Gets the root directory of the file system.
         /// </summary>
         public virtual DiscDirectoryInfo Root
         {
             get { return new DiscDirectoryInfo(this, string.Empty); }
-        }
-
-        /// <summary>
-        /// Gets the volume label.
-        /// </summary>
-        public virtual string VolumeLabel
-        {
-            get { return string.Empty; }
         }
 
         /// <summary>
@@ -99,65 +80,6 @@ namespace LibIRD.DiscUtils
         {
             get { return false; }
         }
-
-        /// <summary>
-        /// Copies an existing file to a new file.
-        /// </summary>
-        /// <param name="sourceFile">The source file.</param>
-        /// <param name="destinationFile">The destination file.</param>
-        public virtual void CopyFile(string sourceFile, string destinationFile)
-        {
-            CopyFile(sourceFile, destinationFile, false);
-        }
-
-        /// <summary>
-        /// Copies an existing file to a new file, allowing overwriting of an existing file.
-        /// </summary>
-        /// <param name="sourceFile">The source file.</param>
-        /// <param name="destinationFile">The destination file.</param>
-        /// <param name="overwrite">Whether to permit over-writing of an existing file.</param>
-        public abstract void CopyFile(string sourceFile, string destinationFile, bool overwrite);
-
-        /// <summary>
-        /// Creates a directory.
-        /// </summary>
-        /// <param name="path">The path of the new directory.</param>
-        public abstract void CreateDirectory(string path);
-
-        /// <summary>
-        /// Deletes a directory.
-        /// </summary>
-        /// <param name="path">The path of the directory to delete.</param>
-        public abstract void DeleteDirectory(string path);
-
-        /// <summary>
-        /// Deletes a directory, optionally with all descendants.
-        /// </summary>
-        /// <param name="path">The path of the directory to delete.</param>
-        /// <param name="recursive">Determines if the all descendants should be deleted.</param>
-        public virtual void DeleteDirectory(string path, bool recursive)
-        {
-            if (recursive)
-            {
-                foreach (string dir in GetDirectories(path))
-                {
-                    DeleteDirectory(dir, true);
-                }
-
-                foreach (string file in GetFiles(path))
-                {
-                    DeleteFile(file);
-                }
-            }
-
-            DeleteDirectory(path);
-        }
-
-        /// <summary>
-        /// Deletes a file.
-        /// </summary>
-        /// <param name="path">The path of the file to delete.</param>
-        public abstract void DeleteFile(string path);
 
         /// <summary>
         /// Indicates if a directory exists.
@@ -263,31 +185,6 @@ namespace LibIRD.DiscUtils
         public abstract string[] GetFileSystemEntries(string path, string searchPattern);
 
         /// <summary>
-        /// Moves a directory.
-        /// </summary>
-        /// <param name="sourceDirectoryName">The directory to move.</param>
-        /// <param name="destinationDirectoryName">The target directory name.</param>
-        public abstract void MoveDirectory(string sourceDirectoryName, string destinationDirectoryName);
-
-        /// <summary>
-        /// Moves a file.
-        /// </summary>
-        /// <param name="sourceName">The file to move.</param>
-        /// <param name="destinationName">The target file name.</param>
-        public virtual void MoveFile(string sourceName, string destinationName)
-        {
-            MoveFile(sourceName, destinationName, false);
-        }
-
-        /// <summary>
-        /// Moves a file, allowing an existing file to be overwritten.
-        /// </summary>
-        /// <param name="sourceName">The file to move.</param>
-        /// <param name="destinationName">The target file name.</param>
-        /// <param name="overwrite">Whether to permit a destination file to be overwritten.</param>
-        public abstract void MoveFile(string sourceName, string destinationName, bool overwrite);
-
-        /// <summary>
         /// Opens the specified file.
         /// </summary>
         /// <param name="path">The full path of the file to open.</param>
@@ -306,122 +203,6 @@ namespace LibIRD.DiscUtils
         /// <param name="access">The access permissions for the created stream.</param>
         /// <returns>The new stream.</returns>
         public abstract SparseStream OpenFile(string path, FileMode mode, FileAccess access);
-
-        /// <summary>
-        /// Gets the attributes of a file or directory.
-        /// </summary>
-        /// <param name="path">The file or directory to inspect.</param>
-        /// <returns>The attributes of the file or directory.</returns>
-        public abstract FileAttributes GetAttributes(string path);
-
-        /// <summary>
-        /// Sets the attributes of a file or directory.
-        /// </summary>
-        /// <param name="path">The file or directory to change.</param>
-        /// <param name="newValue">The new attributes of the file or directory.</param>
-        public abstract void SetAttributes(string path, FileAttributes newValue);
-
-        /// <summary>
-        /// Gets the creation time (in local time) of a file or directory.
-        /// </summary>
-        /// <param name="path">The path of the file or directory.</param>
-        /// <returns>The creation time.</returns>
-        public virtual DateTime GetCreationTime(string path)
-        {
-            return GetCreationTimeUtc(path).ToLocalTime();
-        }
-
-        /// <summary>
-        /// Sets the creation time (in local time) of a file or directory.
-        /// </summary>
-        /// <param name="path">The path of the file or directory.</param>
-        /// <param name="newTime">The new time to set.</param>
-        public virtual void SetCreationTime(string path, DateTime newTime)
-        {
-            SetCreationTimeUtc(path, newTime.ToUniversalTime());
-        }
-
-        /// <summary>
-        /// Gets the creation time (in UTC) of a file or directory.
-        /// </summary>
-        /// <param name="path">The path of the file or directory.</param>
-        /// <returns>The creation time.</returns>
-        public abstract DateTime GetCreationTimeUtc(string path);
-
-        /// <summary>
-        /// Sets the creation time (in UTC) of a file or directory.
-        /// </summary>
-        /// <param name="path">The path of the file or directory.</param>
-        /// <param name="newTime">The new time to set.</param>
-        public abstract void SetCreationTimeUtc(string path, DateTime newTime);
-
-        /// <summary>
-        /// Gets the last access time (in local time) of a file or directory.
-        /// </summary>
-        /// <param name="path">The path of the file or directory.</param>
-        /// <returns>The last access time.</returns>
-        public virtual DateTime GetLastAccessTime(string path)
-        {
-            return GetLastAccessTimeUtc(path).ToLocalTime();
-        }
-
-        /// <summary>
-        /// Sets the last access time (in local time) of a file or directory.
-        /// </summary>
-        /// <param name="path">The path of the file or directory.</param>
-        /// <param name="newTime">The new time to set.</param>
-        public virtual void SetLastAccessTime(string path, DateTime newTime)
-        {
-            SetLastAccessTimeUtc(path, newTime.ToUniversalTime());
-        }
-
-        /// <summary>
-        /// Gets the last access time (in UTC) of a file or directory.
-        /// </summary>
-        /// <param name="path">The path of the file or directory.</param>
-        /// <returns>The last access time.</returns>
-        public abstract DateTime GetLastAccessTimeUtc(string path);
-
-        /// <summary>
-        /// Sets the last access time (in UTC) of a file or directory.
-        /// </summary>
-        /// <param name="path">The path of the file or directory.</param>
-        /// <param name="newTime">The new time to set.</param>
-        public abstract void SetLastAccessTimeUtc(string path, DateTime newTime);
-
-        /// <summary>
-        /// Gets the last modification time (in local time) of a file or directory.
-        /// </summary>
-        /// <param name="path">The path of the file or directory.</param>
-        /// <returns>The last write time.</returns>
-        public virtual DateTime GetLastWriteTime(string path)
-        {
-            return GetLastWriteTimeUtc(path).ToLocalTime();
-        }
-
-        /// <summary>
-        /// Sets the last modification time (in local time) of a file or directory.
-        /// </summary>
-        /// <param name="path">The path of the file or directory.</param>
-        /// <param name="newTime">The new time to set.</param>
-        public virtual void SetLastWriteTime(string path, DateTime newTime)
-        {
-            SetLastWriteTimeUtc(path, newTime.ToUniversalTime());
-        }
-
-        /// <summary>
-        /// Gets the last modification time (in UTC) of a file or directory.
-        /// </summary>
-        /// <param name="path">The path of the file or directory.</param>
-        /// <returns>The last write time.</returns>
-        public abstract DateTime GetLastWriteTimeUtc(string path);
-
-        /// <summary>
-        /// Sets the last modification time (in UTC) of a file or directory.
-        /// </summary>
-        /// <param name="path">The path of the file or directory.</param>
-        /// <param name="newTime">The new time to set.</param>
-        public abstract void SetLastWriteTimeUtc(string path, DateTime newTime);
 
         /// <summary>
         /// Gets the length of a file.
@@ -462,30 +243,6 @@ namespace LibIRD.DiscUtils
         {
             return new DiscFileSystemInfo(this, path);
         }
-
-        /// <summary>
-        /// Reads the boot code of the file system into a byte array.
-        /// </summary>
-        /// <returns>The boot code, or <c>null</c> if not available.</returns>
-        public virtual byte[] ReadBootCode()
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// Size of the Filesystem in bytes
-        /// </summary>
-        public abstract long Size { get; }
- 
-        /// <summary>
-        /// Used space of the Filesystem in bytes
-        /// </summary>
-        public abstract long UsedSpace { get; }
- 
-        /// <summary>
-        /// Available space of the Filesystem in bytes
-        /// </summary>
-        public abstract long AvailableSpace { get; }
 
         #region IDisposable Members
 

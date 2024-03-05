@@ -47,7 +47,7 @@ namespace LibIRD.DiscUtils.Iso9660
         public string PublisherIdentifier;
         public DirectoryRecord RootDirectory;
 
-        public string SystemIdentifier;
+        //public string SystemIdentifier;
         public uint TypeLPathTableLocation;
         public uint TypeMPathTableLocation;
         public string VolumeIdentifier;
@@ -61,7 +61,7 @@ namespace LibIRD.DiscUtils.Iso9660
         {
             CharacterEncoding = enc;
 
-            SystemIdentifier = IsoUtilities.ReadChars(src, offset + 8, 32, CharacterEncoding);
+            //SystemIdentifier = IsoUtilities.ReadChars(src, offset + 8, 32, CharacterEncoding);
             VolumeIdentifier = IsoUtilities.ReadChars(src, offset + 40, 32, CharacterEncoding);
             VolumeSpaceSize = IsoUtilities.ToUInt32FromBoth(src, offset + 80);
             VolumeSetSize = IsoUtilities.ToUInt16FromBoth(src, offset + 120);
@@ -85,56 +85,6 @@ namespace LibIRD.DiscUtils.Iso9660
             ExpirationDateAndTime = IsoUtilities.ToDateTimeFromVolumeDescriptorTime(src, offset + 847);
             EffectiveDateAndTime = IsoUtilities.ToDateTimeFromVolumeDescriptorTime(src, offset + 864);
             FileStructureVersion = src[offset + 881];
-        }
-
-        public CommonVolumeDescriptor(
-            VolumeDescriptorType type,
-            byte version,
-            uint volumeSpaceSize,
-            uint pathTableSize,
-            uint typeLPathTableLocation,
-            uint typeMPathTableLocation,
-            uint rootDirExtentLocation,
-            uint rootDirDataLength,
-            DateTime buildTime,
-            Encoding enc)
-            : base(type, version)
-        {
-            CharacterEncoding = enc;
-
-            SystemIdentifier = string.Empty;
-            VolumeIdentifier = string.Empty;
-            VolumeSpaceSize = volumeSpaceSize;
-            VolumeSetSize = 1;
-            VolumeSequenceNumber = 1;
-            LogicalBlockSize = IsoUtilities.SectorSize;
-            PathTableSize = pathTableSize;
-            TypeLPathTableLocation = typeLPathTableLocation;
-            ////OptionalTypeLPathTableLocation = 0;
-            TypeMPathTableLocation = typeMPathTableLocation;
-            ////OptionalTypeMPathTableLocation = 0;
-            RootDirectory = new DirectoryRecord();
-            RootDirectory.ExtendedAttributeRecordLength = 0;
-            RootDirectory.LocationOfExtent = rootDirExtentLocation;
-            RootDirectory.DataLength = rootDirDataLength;
-            RootDirectory.RecordingDateAndTime = buildTime;
-            RootDirectory.Flags = FileFlags.Directory;
-            RootDirectory.FileUnitSize = 0;
-            RootDirectory.InterleaveGapSize = 0;
-            RootDirectory.VolumeSequenceNumber = 1;
-            RootDirectory.FileIdentifier = "\0";
-            VolumeSetIdentifier = string.Empty;
-            PublisherIdentifier = string.Empty;
-            DataPreparerIdentifier = string.Empty;
-            ApplicationIdentifier = string.Empty;
-            CopyrightFileIdentifier = string.Empty;
-            AbstractFileIdentifier = string.Empty;
-            BibliographicFileIdentifier = string.Empty;
-            CreationDateAndTime = buildTime;
-            ModificationDateAndTime = buildTime;
-            ExpirationDateAndTime = DateTime.MinValue;
-            EffectiveDateAndTime = buildTime;
-            FileStructureVersion = 1; // V1
         }
     }
 }

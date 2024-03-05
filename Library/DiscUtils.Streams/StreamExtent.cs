@@ -353,7 +353,7 @@ namespace LibIRD.DiscUtils.Streams
                 if (extent.Length > 0)
                 {
                     long extentStartBlock = extent.Start / blockSize;
-                    long extentNextBlock = MathUtilities.Ceil(extent.Start + extent.Length, blockSize);
+                    long extentNextBlock = (extent.Start + extent.Length + (blockSize - 1)) / blockSize;
 
                     long extentNumBlocks = extentNextBlock - extentStartBlock;
                     if (extentStartBlock == lastBlock)
@@ -388,7 +388,7 @@ namespace LibIRD.DiscUtils.Streams
                 if (extent.Length > 0)
                 {
                     long extentStartBlock = extent.Start / blockSize;
-                    long extentNextBlock = MathUtilities.Ceil(extent.Start + extent.Length, blockSize);
+                    long extentNextBlock = (extent.Start + extent.Length + (blockSize - 1)) / blockSize;
 
                     if (rangeStart != null && extentStartBlock > rangeStart + rangeLength)
                     {

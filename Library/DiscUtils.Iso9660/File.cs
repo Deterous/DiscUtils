@@ -43,36 +43,6 @@ namespace LibIRD.DiscUtils.Iso9660
             get { return _dirEntry.Record.SystemUseData; }
         }
 
-        public UnixFileSystemInfo UnixFileInfo
-        {
-            get
-            {
-                if (!_context.SuspDetected || string.IsNullOrEmpty(_context.RockRidgeIdentifier))
-                {
-                    throw new InvalidOperationException("No RockRidge file information available");
-                }
-
-                SuspRecords suspRecords = new SuspRecords(_context, SystemUseData, 0);
-
-                PosixFileInfoSystemUseEntry pfi =
-                    suspRecords.GetEntry<PosixFileInfoSystemUseEntry>(_context.RockRidgeIdentifier, "PX");
-                if (pfi != null)
-                {
-                    return new UnixFileSystemInfo
-                    {
-                        FileType = (UnixFileType)((pfi.FileMode >> 12) & 0xff),
-                        Permissions = (UnixFilePermissions)(pfi.FileMode & 0xfff),
-                        UserId = (int)pfi.UserId,
-                        GroupId = (int)pfi.GroupId,
-                        Inode = pfi.Inode,
-                        LinkCount = (int)pfi.NumLinks
-                    };
-                }
-
-                throw new InvalidOperationException("No RockRidge file information available for this file");
-            }
-        }
-
         public DateTime LastAccessTimeUtc
         {
             get { return _dirEntry.LastAccessTimeUtc; }

@@ -59,11 +59,6 @@ namespace LibIRD.DiscUtils.Iso9660
             EndianUtilities.WriteBytesLittleEndian(value, buffer, offset);
         }
 
-        internal static void ToBytesFromUInt16(byte[] buffer, int offset, ushort value)
-        {
-            EndianUtilities.WriteBytesLittleEndian(value, buffer, offset);
-        }
-
         internal static void WriteAChars(byte[] buffer, int offset, int numBytes, string str)
         {
             // Validate string
@@ -130,40 +125,6 @@ namespace LibIRD.DiscUtils.Iso9660
             return new string(chars).TrimEnd(' ');
         }
 
-#if false
-        public static byte WriteFileName(byte[] buffer, int offset, int numBytes, string str, Encoding enc)
-        {
-            if (numBytes > 255 || numBytes < 0)
-            {
-                throw new ArgumentOutOfRangeException("numBytes", "Attempt to write overlength or underlength file name");
-            }
-
-            // Validate string
-            if (!isValidFileName(str))
-            {
-                throw new IOException("Attempt to write string with invalid file name characters");
-            }
-
-            return (byte)WriteString(buffer, offset, numBytes, false, str, enc);
-        }
-
-        public static byte WriteDirectoryName(byte[] buffer, int offset, int numBytes, string str, Encoding enc)
-        {
-            if (numBytes > 255 || numBytes < 0)
-            {
-                throw new ArgumentOutOfRangeException("numBytes", "Attempt to write overlength or underlength directory name");
-            }
-
-            // Validate string
-            if (!isValidDirectoryName(str))
-            {
-                throw new IOException("Attempt to write string with invalid directory name characters");
-            }
-
-            return (byte)WriteString(buffer, offset, numBytes, false, str, enc);
-        }
-#endif
-
         internal static int WriteString(byte[] buffer, int offset, int numBytes, bool pad, string str, Encoding enc)
         {
             return WriteString(buffer, offset, numBytes, pad, str, enc, false);
@@ -227,30 +188,6 @@ namespace LibIRD.DiscUtils.Iso9660
         internal static bool IsValidDChar(char ch)
         {
             return (ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch == '_');
-        }
-
-        internal static bool IsValidFileName(string str)
-        {
-            for (int i = 0; i < str.Length; ++i)
-            {
-                if (
-                    !((str[i] >= '0' && str[i] <= '9') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] == '_') ||
-                      (str[i] == '.') || (str[i] == ';')))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        internal static bool IsValidDirectoryName(string str)
-        {
-            if (str.Length == 1 && (str[0] == 0 || str[0] == 1))
-            {
-                return true;
-            }
-            return IsValidDString(str);
         }
 
         internal static string NormalizeFileName(string name)
