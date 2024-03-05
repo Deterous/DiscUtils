@@ -218,7 +218,7 @@ namespace LibIRD.DiscUtils.Streams
         /// <returns>The sector data as a byte array.</returns>
         public static byte[] ReadSector(Stream stream)
         {
-            return ReadExact(stream, Sizes.Sector);
+            return ReadExact(stream, 512);
         }
 
         /// <summary>

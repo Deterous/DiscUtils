@@ -419,7 +419,7 @@ namespace LibIRD.DiscUtils.Iso9660
             if (initialEntry != null)
             {
                 return new SubStream(_data, initialEntry.ImageStart * IsoUtilities.SectorSize,
-                    initialEntry.SectorCount * Sizes.Sector);
+                    initialEntry.SectorCount * 512);
             }
             throw new InvalidOperationException("No valid boot image");
         }

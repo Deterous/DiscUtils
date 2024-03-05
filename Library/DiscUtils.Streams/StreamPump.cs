@@ -41,7 +41,7 @@ namespace LibIRD.DiscUtils.Streams
         public StreamPump()
         {
             SparseChunkSize = 512;
-            BufferSize = (int)(512 * Sizes.OneKiB);
+            BufferSize = (int)(512 * 1024);
             SparseCopy = true;
         }
 
@@ -56,7 +56,7 @@ namespace LibIRD.DiscUtils.Streams
             InputStream = inStream;
             OutputStream = outStream;
             SparseChunkSize = sparseChunkSize;
-            BufferSize = (int)(512 * Sizes.OneKiB);
+            BufferSize = (int)(512 * 1024);
             SparseCopy = true;
         }
 

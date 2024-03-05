@@ -76,7 +76,7 @@ namespace LibIRD.DiscUtils.Streams
         /// <remarks><paramref name="outStream"/> must support seeking.</remarks>
         public static void Pump(Stream inStream, Stream outStream)
         {
-            Pump(inStream, outStream, Sizes.Sector);
+            Pump(inStream, outStream, 512);
         }
 
         /// <summary>

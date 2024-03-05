@@ -20,7 +20,6 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-using LibIRD.DiscUtils.CoreCompat;
 using LibIRD.DiscUtils.Streams;
 using LibIRD.DiscUtils.Vfs;
 using System;
