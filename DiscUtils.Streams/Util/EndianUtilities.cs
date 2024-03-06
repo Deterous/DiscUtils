@@ -20,8 +20,6 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 namespace LibIRD.DiscUtils.Streams
 {
     public static class EndianUtilities

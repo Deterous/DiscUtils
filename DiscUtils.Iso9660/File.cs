@@ -22,21 +22,15 @@
 
 using System;
 using System.IO;
-using LibIRD.DiscUtils.Vfs;
 using LibIRD.DiscUtils.Streams;
+using LibIRD.DiscUtils.Vfs;
 
 namespace LibIRD.DiscUtils.Iso9660
 {
-    internal class File : IVfsFile
+    internal class File(IsoContext context, ReaderDirEntry dirEntry) : IVfsFile
     {
-        protected IsoContext _context;
-        protected ReaderDirEntry _dirEntry;
-
-        public File(IsoContext context, ReaderDirEntry dirEntry)
-        {
-            _context = context;
-            _dirEntry = dirEntry;
-        }
+        protected IsoContext _context = context;
+        protected ReaderDirEntry _dirEntry = dirEntry;
 
         public virtual byte[] SystemUseData
         {

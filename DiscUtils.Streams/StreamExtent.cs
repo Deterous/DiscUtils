@@ -32,28 +32,23 @@ namespace LibIRD.DiscUtils.Streams
     /// are actually stored in the underlying storage medium (rather than implied
     /// zero bytes).  Extents are stored as a zero-based byte offset (from the
     /// beginning of the stream), and a byte length.</remarks>
-    public sealed class StreamExtent : IEquatable<StreamExtent>, IComparable<StreamExtent>
+    /// <remarks>
+    /// Initializes a new instance of the StreamExtent class.
+    /// </remarks>
+    /// <param name="start">The start of the extent.</param>
+    /// <param name="length">The length of the extent.</param>
+    public sealed class StreamExtent(long start, long length) : IEquatable<StreamExtent>, IComparable<StreamExtent>
     {
-        /// <summary>
-        /// Initializes a new instance of the StreamExtent class.
-        /// </summary>
-        /// <param name="start">The start of the extent.</param>
-        /// <param name="length">The length of the extent.</param>
-        public StreamExtent(long start, long length)
-        {
-            Start = start;
-            Length = length;
-        }
 
         /// <summary>
         /// Gets the start of the extent (in bytes).
         /// </summary>
-        public long Length { get; }
+        public long Length { get; } = length;
 
         /// <summary>
         /// Gets the start of the extent (in bytes).
         /// </summary>
-        public long Start { get; }
+        public long Start { get; } = start;
 
         /// <summary>
         /// Compares this stream extent to another.
@@ -386,11 +381,11 @@ namespace LibIRD.DiscUtils.Streams
                         yield return new Range<long, long>((long)rangeStart, rangeLength);
                         rangeStart = extentStartBlock;
                     }
-                    else if (rangeStart == null)
+                    else
                     {
                         // First extent, so start first range
-                        rangeStart = extentStartBlock;
-                    }
+                        rangeStart ??= extentStartBlock;
+                    }  
 
                     // Set the length of the current range, based on the end of this extent
                     rangeLength = extentNextBlock - (long)rangeStart;

@@ -20,7 +20,6 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-using System;
 using System.IO;
 using LibIRD.DiscUtils.Streams;
 
@@ -43,9 +42,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <summary>
         /// Initializes a new instance of the VfsReadOnlyFileSystem class.
         /// </summary>
-        /// <param name="defaultOptions">The default file system options.</param>
-        protected VfsReadOnlyFileSystem(DiscFileSystemOptions defaultOptions)
-            : base(defaultOptions) {}
+        protected VfsReadOnlyFileSystem() : base() {}
 
         /// <summary>
         /// Opens the specified file.

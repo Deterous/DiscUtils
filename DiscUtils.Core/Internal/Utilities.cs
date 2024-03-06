@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace LibIRD.DiscUtils.Internal
@@ -172,21 +171,6 @@ namespace LibIRD.DiscUtils.Internal
 
             string query = "^" + Regex.Escape(pattern).Replace(@"\*", ".*").Replace(@"\?", "[^.]") + "$";
             return new Regex(query, RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
-        }
-
-        public static FileAttributes FileAttributesFromUnixFileType(UnixFileType fileType)
-        {
-            return fileType switch
-            {
-                UnixFileType.Fifo => FileAttributes.Device | FileAttributes.System,
-                UnixFileType.Character => FileAttributes.Device | FileAttributes.System,
-                UnixFileType.Directory => FileAttributes.Directory,
-                UnixFileType.Block => FileAttributes.Device | FileAttributes.System,
-                UnixFileType.Regular => FileAttributes.Normal,
-                UnixFileType.Link => FileAttributes.ReparsePoint,
-                UnixFileType.Socket => FileAttributes.Device | FileAttributes.System,
-                _ => 0,
-            };
         }
 
         #endregion

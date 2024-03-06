@@ -46,9 +46,7 @@ namespace LibIRD.DiscUtils.Iso9660
             _interleaveGapSize = interleaveGapSize;
 
             if (_fileUnitSize != 0 || _interleaveGapSize != 0)
-            {
                 throw new NotSupportedException("Non-contiguous extents not supported");
-            }
         }
 
         public override bool CanRead

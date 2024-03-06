@@ -49,8 +49,8 @@ namespace LibIRD.DiscUtils.Vfs
         /// Initializes a new instance of the VfsFileSystem class.
         /// </summary>
         /// <param name="defaultOptions">The default file system options.</param>
-        protected VfsFileSystem(DiscFileSystemOptions defaultOptions)
-            : base(defaultOptions)
+        protected VfsFileSystem()
+            : base()
         {
             _fileCache = new ObjectCache<long, TFile>();
         }
@@ -191,23 +191,17 @@ namespace LibIRD.DiscUtils.Vfs
         public override SparseStream OpenFile(string path, FileMode mode, FileAccess access)
         {
             if (mode != FileMode.Open)
-            {
                 throw new NotSupportedException("Only existing files can be opened");
-            }
 
             if (access != FileAccess.Read)
-            {
                 throw new NotSupportedException("Files cannot be opened for write");
-            }
 
             string fileName = Utilities.GetFileFromPath(path);
             string attributeName = null;
 
             int streamSepPos = fileName.IndexOf(':');
             if (streamSepPos >= 0)
-            {
                 attributeName = fileName.Substring(streamSepPos + 1);
-            }
 
             string dirName;
             try
@@ -224,9 +218,7 @@ namespace LibIRD.DiscUtils.Vfs
             if (entry == null)
             {
                 if (mode == FileMode.Open)
-                {
                     throw new FileNotFoundException("No such file", path);
-                }
                 TDirectory parentDir = GetDirectory(Utilities.GetDirectoryFromPath(path));
                 entry = parentDir.CreateNewFile(Utilities.GetFileFromPath(path));
             }
@@ -236,14 +228,10 @@ namespace LibIRD.DiscUtils.Vfs
             }
 
             if (entry.IsSymlink)
-            {
                 entry = ResolveSymlink(entry, entryPath);
-            }
 
             if (entry.IsDirectory)
-            {
                 throw new IOException("Attempt to open directory as a file");
-            }
             TFile file = GetFile(entry);
 
             SparseStream stream;

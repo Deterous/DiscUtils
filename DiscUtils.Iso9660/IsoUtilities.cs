@@ -22,9 +22,7 @@
 
 using System;
 using System.Globalization;
-using System.IO;
 using System.Text;
-using LibIRD.DiscUtils.Streams;
 
 namespace LibIRD.DiscUtils.Iso9660
 {
@@ -135,76 +133,9 @@ namespace LibIRD.DiscUtils.Iso9660
             }
         }
 
-        internal static DateTime ToDateTimeFromVolumeDescriptorTime(byte[] data, int offset)
-        {
-            bool allNull = true;
-            for (int i = 0; i < 16; ++i)
-            {
-                if (data[offset + i] != (byte)'0' && data[offset + i] != 0)
-                {
-                    allNull = false;
-                    break;
-                }
-            }
-
-            if (allNull)
-            {
-                return DateTime.MinValue;
-            }
-
-            string strForm = Encoding.ASCII.GetString(data, offset, 16);
-
-            // Work around bugs in burning software that may use zero bytes (rather than '0' characters)
-            strForm = strForm.Replace('\0', '0');
-
-            int year = SafeParseInt(1, 9999, strForm.Substring(0, 4));
-            int month = SafeParseInt(1, 12, strForm.Substring(4, 2));
-            int day = SafeParseInt(1, 31, strForm.Substring(6, 2));
-            int hour = SafeParseInt(0, 23, strForm.Substring(8, 2));
-            int min = SafeParseInt(0, 59, strForm.Substring(10, 2));
-            int sec = SafeParseInt(0, 59, strForm.Substring(12, 2));
-            int hundredths = SafeParseInt(0, 99, strForm.Substring(14, 2));
-
-            try
-            {
-                DateTime time = new(year, month, day, hour, min, sec, hundredths * 10, DateTimeKind.Utc);
-                return time - TimeSpan.FromMinutes(15 * (sbyte)data[offset + 16]);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                return DateTime.MinValue;
-            }
-        }
-
-        internal static Encoding EncodingFromBytes(byte[] data, int offset)
-        {
-            Encoding enc = Encoding.ASCII;
-            if (data[offset + 0] == 0x25 && data[offset + 1] == 0x2F
-                && (data[offset + 2] == 0x40 || data[offset + 2] == 0x43 || data[offset + 2] == 0x45))
-            {
-                // I.e. this is a joliet disc!
-                enc = Encoding.BigEndianUnicode;
-            }
-
-            return enc;
-        }
-
         internal static bool IsSpecialDirectory(DirectoryRecord r)
         {
             return r.FileIdentifier == "\0" || r.FileIdentifier == "\x01";
-        }
-
-        private static int SafeParseInt(int minVal, int maxVal, string str)
-        {
-            if (!int.TryParse(str, out int val))
-                return minVal;
-
-            if (val < minVal)
-                return minVal;
-            if (val > maxVal)
-                return maxVal;
-
-            return val;
         }
     }
 }

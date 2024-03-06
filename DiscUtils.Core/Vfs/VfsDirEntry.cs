@@ -112,10 +112,10 @@ namespace LibIRD.DiscUtils.Vfs
             get
             {
                 string fileName = FileName;
-                if (fileName.IndexOf('.') == -1)
-                {
+
+                if (!fileName.Contains("."))
                     return fileName + ".";
-                }
+
                 return fileName;
             }
         }

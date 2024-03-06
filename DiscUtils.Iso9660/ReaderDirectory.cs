@@ -20,12 +20,12 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-using LibIRD.DiscUtils.Streams;
-using LibIRD.DiscUtils.Vfs;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using LibIRD.DiscUtils.Streams;
+using LibIRD.DiscUtils.Vfs;
 
 namespace LibIRD.DiscUtils.Iso9660
 {
@@ -57,23 +57,13 @@ namespace LibIRD.DiscUtils.Iso9660
 
                     if (!IsoUtilities.IsSpecialDirectory(dr))
                     {
-                        ReaderDirEntry childDirEntry = new(_context, dr);
+                        ReaderDirEntry childDirEntry = new(dr);
 
-                        if (context.SuspDetected && !string.IsNullOrEmpty(context.RockRidgeIdentifier))
-                        {
-                            if (childDirEntry.SuspRecords == null || !childDirEntry.SuspRecords.HasEntry(context.RockRidgeIdentifier, "RE"))
-                            {
-                                _records.Add(childDirEntry);
-                            }
-                        }
-                        else
-                        {
-                            _records.Add(childDirEntry);
-                        }
+                        _records.Add(childDirEntry);
                     }
                     else if (dr.FileIdentifier == "\0")
                     {
-                        Self = new ReaderDirEntry(_context, dr);
+                        Self = new ReaderDirEntry(dr);
                     }
 
                     pos += length;

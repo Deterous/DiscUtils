@@ -28,30 +28,23 @@ namespace LibIRD.DiscUtils.Streams
     /// <summary>
     /// Converts a Buffer into a Stream.
     /// </summary>
-    public class BufferStream : SparseStream
+    /// <remarks>
+    /// Initializes a new instance of the BufferStream class.
+    /// </remarks>
+    /// <param name="buffer">The buffer to use.</param>
+    /// <param name="access">The access permitted to clients.</param>
+    public class BufferStream(IBuffer buffer, FileAccess access) : SparseStream
     {
-        private readonly FileAccess _access;
-        private readonly IBuffer _buffer;
+        private readonly IBuffer _buffer = buffer;
 
         private long _position;
-
-        /// <summary>
-        /// Initializes a new instance of the BufferStream class.
-        /// </summary>
-        /// <param name="buffer">The buffer to use.</param>
-        /// <param name="access">The access permitted to clients.</param>
-        public BufferStream(IBuffer buffer, FileAccess access)
-        {
-            _buffer = buffer;
-            _access = access;
-        }
 
         /// <summary>
         /// Gets an indication of whether read access is permitted.
         /// </summary>
         public override bool CanRead
         {
-            get { return _access != FileAccess.Write; }
+            get { return access != FileAccess.Write; }
         }
 
         /// <summary>
@@ -67,7 +60,7 @@ namespace LibIRD.DiscUtils.Streams
         /// </summary>
         public override bool CanWrite
         {
-            get { return _access != FileAccess.Read; }
+            get { return access != FileAccess.Read; }
         }
 
         /// <summary>

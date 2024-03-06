@@ -20,7 +20,6 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-using System;
 using System.IO;
 using LibIRD.DiscUtils.Streams;
 
@@ -33,33 +32,19 @@ namespace LibIRD.DiscUtils.Vfs
     /// The derived class can extend the functionality available from a file system
     /// beyond that defined by DiscFileSystem.
     /// </remarks>
-    public abstract class VfsFileSystemFacade : DiscFileSystem
+    /// <remarks>
+    /// Initializes a new instance of the VfsFileSystemFacade class.
+    /// </remarks>
+    /// <param name="toWrap">The actual file system instance.</param>
+    public abstract class VfsFileSystemFacade(DiscFileSystem toWrap) : DiscFileSystem
     {
-        private readonly DiscFileSystem _wrapped;
-
-        /// <summary>
-        /// Initializes a new instance of the VfsFileSystemFacade class.
-        /// </summary>
-        /// <param name="toWrap">The actual file system instance.</param>
-        protected VfsFileSystemFacade(DiscFileSystem toWrap)
-        {
-            _wrapped = toWrap;
-        }
 
         /// <summary>
         /// Gets a value indicating whether the file system is thread-safe.
         /// </summary>
         public override bool IsThreadSafe
         {
-            get { return _wrapped.IsThreadSafe; }
-        }
-
-        /// <summary>
-        /// Gets the file system options, which can be modified.
-        /// </summary>
-        public override DiscFileSystemOptions Options
-        {
-            get { return _wrapped.Options; }
+            get { return toWrap.IsThreadSafe; }
         }
 
         /// <summary>
@@ -77,7 +62,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <returns>true if the directory exists.</returns>
         public override bool DirectoryExists(string path)
         {
-            return _wrapped.DirectoryExists(path);
+            return toWrap.DirectoryExists(path);
         }
 
         /// <summary>
@@ -87,7 +72,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <returns>true if the file exists.</returns>
         public override bool FileExists(string path)
         {
-            return _wrapped.FileExists(path);
+            return toWrap.FileExists(path);
         }
 
         /// <summary>
@@ -97,7 +82,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <returns>true if the file or directory exists.</returns>
         public override bool Exists(string path)
         {
-            return _wrapped.Exists(path);
+            return toWrap.Exists(path);
         }
 
         /// <summary>
@@ -107,7 +92,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <returns>Array of directories.</returns>
         public override string[] GetDirectories(string path)
         {
-            return _wrapped.GetDirectories(path);
+            return toWrap.GetDirectories(path);
         }
 
         /// <summary>
@@ -119,7 +104,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <returns>Array of directories matching the search pattern.</returns>
         public override string[] GetDirectories(string path, string searchPattern)
         {
-            return _wrapped.GetDirectories(path, searchPattern);
+            return toWrap.GetDirectories(path, searchPattern);
         }
 
         /// <summary>
@@ -132,7 +117,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <returns>Array of directories matching the search pattern.</returns>
         public override string[] GetDirectories(string path, string searchPattern, SearchOption searchOption)
         {
-            return _wrapped.GetDirectories(path, searchPattern, searchOption);
+            return toWrap.GetDirectories(path, searchPattern, searchOption);
         }
 
         /// <summary>
@@ -142,7 +127,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <returns>Array of files.</returns>
         public override string[] GetFiles(string path)
         {
-            return _wrapped.GetFiles(path);
+            return toWrap.GetFiles(path);
         }
 
         /// <summary>
@@ -153,7 +138,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <returns>Array of files matching the search pattern.</returns>
         public override string[] GetFiles(string path, string searchPattern)
         {
-            return _wrapped.GetFiles(path, searchPattern);
+            return toWrap.GetFiles(path, searchPattern);
         }
 
         /// <summary>
@@ -166,7 +151,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <returns>Array of files matching the search pattern.</returns>
         public override string[] GetFiles(string path, string searchPattern, SearchOption searchOption)
         {
-            return _wrapped.GetFiles(path, searchPattern, searchOption);
+            return toWrap.GetFiles(path, searchPattern, searchOption);
         }
 
         /// <summary>
@@ -176,7 +161,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <returns>Array of files and subdirectories matching the search pattern.</returns>
         public override string[] GetFileSystemEntries(string path)
         {
-            return _wrapped.GetFileSystemEntries(path);
+            return toWrap.GetFileSystemEntries(path);
         }
 
         /// <summary>
@@ -188,7 +173,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <returns>Array of files and subdirectories matching the search pattern.</returns>
         public override string[] GetFileSystemEntries(string path, string searchPattern)
         {
-            return _wrapped.GetFileSystemEntries(path, searchPattern);
+            return toWrap.GetFileSystemEntries(path, searchPattern);
         }
 
         /// <summary>
@@ -199,7 +184,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <returns>The new stream.</returns>
         public override SparseStream OpenFile(string path, FileMode mode)
         {
-            return _wrapped.OpenFile(path, mode);
+            return toWrap.OpenFile(path, mode);
         }
 
         /// <summary>
@@ -211,7 +196,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <returns>The new stream.</returns>
         public override SparseStream OpenFile(string path, FileMode mode, FileAccess access)
         {
-            return _wrapped.OpenFile(path, mode, access);
+            return toWrap.OpenFile(path, mode, access);
         }
 
         /// <summary>
@@ -221,7 +206,7 @@ namespace LibIRD.DiscUtils.Vfs
         /// <returns>The length in bytes.</returns>
         public override long GetFileLength(string path)
         {
-            return _wrapped.GetFileLength(path);
+            return toWrap.GetFileLength(path);
         }
 
         /// <summary>
@@ -265,7 +250,7 @@ namespace LibIRD.DiscUtils.Vfs
         protected T GetRealFileSystem<T>()
             where T : DiscFileSystem
         {
-            return (T)_wrapped;
+            return (T)toWrap;
         }
     }
 }

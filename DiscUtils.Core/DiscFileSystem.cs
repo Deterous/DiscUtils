@@ -38,19 +38,7 @@ namespace LibIRD.DiscUtils
         /// <summary>
         /// Initializes a new instance of the DiscFileSystem class.
         /// </summary>
-        protected DiscFileSystem()
-        {
-            Options = new DiscFileSystemOptions();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the DiscFileSystem class.
-        /// </summary>
-        /// <param name="defaultOptions">The options instance to use for this file system instance.</param>
-        protected DiscFileSystem(DiscFileSystemOptions defaultOptions)
-        {
-            Options = defaultOptions;
-        }
+        protected DiscFileSystem() { }
 
         /// <summary>
         /// Finalizes an instance of the DiscFileSystem class.
@@ -59,11 +47,6 @@ namespace LibIRD.DiscUtils
         {
             Dispose(false);
         }
-
-        /// <summary>
-        /// Gets the file system options, which can be modified.
-        /// </summary>
-        public virtual DiscFileSystemOptions Options { get; }
 
         /// <summary>
         /// Gets the root directory of the file system.

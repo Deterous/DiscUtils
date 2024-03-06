@@ -29,15 +29,13 @@ namespace LibIRD.DiscUtils.Iso9660
     /// <summary>
     /// Class for reading existing ISO images.
     /// </summary>
-    public class CDReader : VfsFileSystemFacade
+    /// <remarks>
+    /// Initializes a new instance of the CDReader class.
+    /// </remarks>
+    /// <param name="data">The stream to read the ISO image from.</param>
+    /// <param name="joliet">Whether to read Joliet extensions.</param>
+    public class CDReader(Stream data) : VfsFileSystemFacade(new VfsCDReader(data))
     {
-        /// <summary>
-        /// Initializes a new instance of the CDReader class.
-        /// </summary>
-        /// <param name="data">The stream to read the ISO image from.</param>
-        /// <param name="joliet">Whether to read Joliet extensions.</param>
-        public CDReader(Stream data)
-            : base(new VfsCDReader(data)) {}
 
         /// <summary>
         /// Converts a file name to the list of clusters occupied by the file's data.

@@ -24,19 +24,11 @@ using System.Text;
 
 namespace LibIRD.DiscUtils.Iso9660
 {
-    internal class BaseVolumeDescriptor
+    internal class BaseVolumeDescriptor(byte[] src, int offset)
     {
         public const string Iso9660StandardIdentifier = "CD001";
-
-        public readonly string StandardIdentifier;
-        public readonly VolumeDescriptorType VolumeDescriptorType;
-        public readonly byte VolumeDescriptorVersion;
-
-        public BaseVolumeDescriptor(byte[] src, int offset)
-        {
-            VolumeDescriptorType = (VolumeDescriptorType)src[offset + 0];
-            StandardIdentifier = Encoding.ASCII.GetString(src, offset + 1, 5);
-            VolumeDescriptorVersion = src[offset + 6];
-        }
+        public readonly string StandardIdentifier = Encoding.ASCII.GetString(src, offset + 1, 5);
+        public readonly VolumeDescriptorType VolumeDescriptorType = (VolumeDescriptorType)src[offset + 0];
+        public readonly byte VolumeDescriptorVersion = src[offset + 6];
     }
 }
